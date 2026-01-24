@@ -144,60 +144,68 @@ window.addEventListener("load", () => {
 /* STAR BACKGROUND */
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
-
 let stars = [];
-let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+const MAX_SPEED = 1.5; // <-- cap max speed
 
-function resizeCanvas() {
+function resizeCanvas(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-/* STAR CLASS */
 class Star {
-  constructor(isLarge = false) {
+  constructor(isLarge=false){
     this.isLarge = isLarge;
-    this.size = isLarge ? Math.random() * 4 + 3 : Math.random() * 1.5 + 0.5;
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.vx = (Math.random() - 0.5) * (isLarge ? 1 : 2); // initial velocity
-    this.vy = (Math.random() - 0.5) * (isLarge ? 1 : 2);
-    this.gravity = isLarge ? 0.2 : 0; // attracts other stars
+    this.size = isLarge ? Math.random()*4+3 : Math.random()*1.5+0.5;
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.vx = (Math.random()-0.5)*(isLarge?0.8:1.2);
+    this.vy = (Math.random()-0.5)*(isLarge?0.8:1.2);
+    this.gravity = isLarge?0.2:0;
     this.color = "white";
     this.exploding = false;
   }
 
-  update() {
+  // Limit velocity to MAX_SPEED
+  limitSpeed(){
+    const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+    if(speed > MAX_SPEED){
+      const scale = MAX_SPEED / speed;
+      this.vx *= scale;
+      this.vy *= scale;
+    }
+  }
+
+  update(){
     if(this.exploding) return;
 
-    // MOVE
     this.x += this.vx;
     this.y += this.vy;
 
-    // BOUNCE OFF WALLS (Pong style)
-    if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
-    if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
+    // Bounce off walls
+    if(this.x<=0 || this.x>=canvas.width) this.vx*=-1;
+    if(this.y<=0 || this.y>=canvas.height) this.vy*=-1;
 
-    // GRAVITY EFFECT
-    if(this.gravity > 0){
-      stars.forEach(s => {
-        if(s !== this && !s.exploding){
+    // Gravity effect
+    if(this.gravity>0){
+      stars.forEach(s=>{
+        if(s!==this && !s.exploding){
           const dx = this.x - s.x;
           const dy = this.y - s.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if(dist < 200){
-            s.vx += dx/dist * 0.02;
-            s.vy += dy/dist * 0.02;
+          const dist = Math.sqrt(dx*dx+dy*dy);
+          if(dist<200){
+            s.vx += dx/dist*0.015; // slightly weaker pull
+            s.vy += dy/dist*0.015;
           }
         }
       });
     }
 
-    // COLLISION WITH OTHER STARS
-    stars.forEach(s => {
-      if(s !== this && !s.exploding){
+    // Collision with other stars
+    stars.forEach(s=>{
+      if(s!==this && !s.exploding){
         const dx = this.x - s.x;
         const dy = this.y - s.y;
         const dist = Math.sqrt(dx*dx + dy*dy);
@@ -205,76 +213,74 @@ class Star {
         if(dist < minDist){
           // Bounce away
           const angle = Math.atan2(dy, dx);
-          const force = 0.5;
-          this.vx += Math.cos(angle) * force;
-          this.vy += Math.sin(angle) * force;
-          s.vx -= Math.cos(angle) * force;
-          s.vy -= Math.sin(angle) * force;
+          const force = 0.3; // smaller force to reduce speed
+          this.vx += Math.cos(angle)*force;
+          this.vy += Math.sin(angle)*force;
+          s.vx -= Math.cos(angle)*force;
+          s.vy -= Math.sin(angle)*force;
 
-          // EXPLODE LARGE STAR IF COLLIDED
-          if(this.isLarge || s.isLarge){
-            if(this.isLarge) this.explode();
-            if(s.isLarge) s.explode();
-          }
+          // Explode large star
+          if(this.isLarge) this.explode();
+          if(s.isLarge) s.explode();
         }
       }
     });
+
+    this.limitSpeed(); // enforce max speed
   }
 
   explode(){
     this.exploding = true;
-    const pieces = 8;
+    const pieces = 6; // fewer pieces to reduce speed chaos
     for(let i=0;i<pieces;i++){
       const p = new Star(false);
       p.x = this.x;
       p.y = this.y;
       const angle = (Math.PI*2/pieces)*i;
-      p.vx = Math.cos(angle)*4;
-      p.vy = Math.sin(angle)*4;
+      p.vx = Math.cos(angle)*1.5; // limited speed
+      p.vy = Math.sin(angle)*1.5;
       stars.push(p);
     }
     this.size = 0;
   }
 
-  draw() {
+  draw(){
     if(this.exploding && this.size<=0) return;
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
     ctx.fillStyle = this.color;
     ctx.fill();
   }
 
-  distanceToMouse() {
+  distanceToMouse(){
     const dx = this.x - mouse.x;
     const dy = this.y - mouse.y;
     return Math.sqrt(dx*dx + dy*dy);
   }
 }
 
-/* SPAWN STARS (increase spawn rate) */
+// Initial stars
+for(let i=0;i<80;i++) stars.push(new Star());
+
+// Spawn stars
 function spawnStars(){
-  const total = stars.length;
-  if(total < 160){
-    // 1 in 10 chance to spawn large star
+  if(stars.length < 160){
     stars.push(new Star(Math.random()<0.1));
   }
 }
-setInterval(spawnStars, 150); // faster spawn (every 150ms)
+setInterval(spawnStars, 150);
 
-/* INITIAL STARS */
-for(let i=0;i<80;i++) stars.push(new Star());
-
-/* MOUSE TRACKING */
-window.addEventListener("mousemove", e => {
+// Track mouse
+window.addEventListener("mousemove", e=>{
   mouse.x = e.clientX;
   mouse.y = e.clientY;
 });
 
-/* CONNECT CLOSEST STARS TO CURSOR */
+// Draw lines to closest stars
 function drawConnections(){
   const sorted = [...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse());
   const closest = sorted.slice(0,12);
-  closest.forEach(star => {
+  closest.forEach(star=>{
     const dist = star.distanceToMouse();
     const alpha = Math.max(0,1-dist/300);
     ctx.beginPath();
@@ -286,17 +292,15 @@ function drawConnections(){
   });
 }
 
-/* ANIMATE LOOP */
+// Animate
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   stars.forEach(s=>{s.update(); s.draw();});
   drawConnections();
   requestAnimationFrame(animate);
 }
-
 animate();
 </script>
-
 
 </body>
 </html>
