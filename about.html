@@ -151,48 +151,86 @@ class Star {
   constructor() {
     this.reset();
   }
+
   reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
     this.size = Math.random() * 1.5 + 0.5;
-    this.speed = Math.random() * 0.3 + 0.1;
+    this.speed = (Math.random() * 0.3 + 0.1) * 2; // doubled speed
   }
+
   update() {
-    const dx = (mouse.x - this.x) * 0.0005;
-    const dy = (mouse.y - this.y) * 0.0005;
+    const dx = (mouse.x - this.x) * 0.0008; // doubled influence
+    const dy = (mouse.y - this.y) * 0.0008;
+
     this.x += dx;
     this.y += dy + this.speed;
 
     if (this.y > canvas.height) this.reset();
   }
+
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fillStyle = "white";
     ctx.fill();
   }
+
+  distanceToMouse() {
+    const dx = this.x - mouse.x;
+    const dy = this.y - mouse.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
 }
 
-for (let i = 0; i < 120; i++) {
+/* CREATE STARS */
+for (let i = 0; i < 140; i++) {
   stars.push(new Star());
 }
 
+/* TRACK MOUSE */
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
 });
 
+/* DRAW LINES TO CLOSEST STARS */
+function drawConnections() {
+  const sortedStars = [...stars].sort(
+    (a, b) => a.distanceToMouse() - b.distanceToMouse()
+  );
+
+  const closest = sortedStars.slice(0, 12);
+
+  closest.forEach(star => {
+    const dist = star.distanceToMouse();
+    const alpha = Math.max(0, 1 - dist / 300);
+
+    ctx.beginPath();
+    ctx.moveTo(mouse.x, mouse.y);
+    ctx.lineTo(star.x, star.y);
+    ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.6})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+}
+
+/* ANIMATION LOOP */
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   stars.forEach(star => {
     star.update();
     star.draw();
   });
+
+  drawConnections();
+
   requestAnimationFrame(animate);
 }
+
 animate();
 </script>
-
 
 </body>
 </html>
