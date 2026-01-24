@@ -94,6 +94,17 @@ section{
   border-radius:14px;
   box-shadow:0 10px 30px rgba(0,0,0,0.3)
 }
+  .bottom-left-text {
+  position: fixed;
+  bottom: 20px;      /* distance from the bottom */
+  left: 20px;        /* distance from the left */
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.3); /* semi-transparent white */
+  font-weight: bold;
+  pointer-events: none; /* lets you click through it */
+  z-index: 500;     /* above background but below menu */
+}
+
 </style>
 </head>
 
@@ -117,10 +128,15 @@ section{
   <h1 style="font-size:50px;">Hello, My name is <center><strong style="font-size:60px;">Adrian Zamora</strong></center></h1>
   <p style="font-size:40px;"><strong>Date Of Birth</strong></p>
   <p style="font-size:40px;">05/13/2008</p>
-  <p style="font-size:30px;">Born In<strong style="font-size:40px;"> Las Vegas, Nevada</strong></p>
-  
+  <p style="font-size:30px;">Born In <strong style="font-size:40px;"> Las Vegas, Nevada</strong></p>
+ 
+  <div class="bottom-left-text">
+  Adrian Zamora &copy; 2026
 </div>
 
+</div>
+
+  
 <script>
 /* ===============================
    SIDE MENU – HOVER OPEN/CLOSE
