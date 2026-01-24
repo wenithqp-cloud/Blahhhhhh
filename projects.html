@@ -3,26 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Projects</title>
+
 <style>
 *{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:#0b0f1a;color:#eaeaea;overflow-x:hidden}
-#starCanvas{position:fixed;inset:0;z-index:-1}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b0f1a;
+  color:#eaeaea;
+  overflow-x:hidden
+}
+#starCanvas{
+  position:fixed;
+  inset:0;
+  z-index:-1
+}
 
+/* SIDE MENU */
 .side-menu{
-  position:fixed;top:0;left:0;height:100vh;width:70px;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
+  width:70px;
   background:rgba(15,15,25,0.85);
   backdrop-filter:blur(10px);
   overflow:hidden;
   transition:width 0.45s cubic-bezier(.4,0,.2,1);
   z-index:1000
 }
-.side-menu.expanded{width:50vw}
+.side-menu.expanded{
+  width:50vw
+}
 
 .menu-label{
-  height:70px;display:flex;align-items:center;justify-content:center;
-  color:white;font-weight:bold;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  letter-spacing:2px
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:bold;
+  letter-spacing:2px;
+  border-bottom:1px solid rgba(255,255,255,0.1)
 }
 
 .menu-content{
@@ -51,7 +73,16 @@ body{margin:0;font-family:Arial,sans-serif;background:#0b0f1a;color:#eaeaea;over
   transform:translateX(6px)
 }
 
-.content{padding:80px 40px 40px 120px}
+/* ACTIVE PAGE */
+.menu-content a.active{
+  color:white;
+  background:rgba(255,255,255,0.12);
+  font-weight:bold
+}
+
+.content{
+  padding:80px 40px 40px 120px
+}
 section{
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(12px);
@@ -62,8 +93,8 @@ section{
 }
 </style>
 </head>
-<body>
 
+<body>
 <canvas id="starCanvas"></canvas>
 
 <div class="side-menu" id="sideMenu">
@@ -72,7 +103,7 @@ section{
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="skills.html">Skills</a>
-    <a href="projects.html">Projects</a>
+    <a href="projects.html" class="active">Projects</a>
     <a href="experience.html">Experience</a>
     <a href="goals.html">Goals</a>
     <a href="contact.html">Contact</a>
@@ -86,24 +117,35 @@ section{
 </div>
 
 <script>
-/* SIDE MENU HOVER */
+/* ===============================
+   SIDE MENU – HOVER OPEN/CLOSE
+   =============================== */
 const sideMenu = document.getElementById("sideMenu");
+let closeTimer;
 
 sideMenu.addEventListener("mouseenter", () => {
+  clearTimeout(closeTimer);
   sideMenu.classList.add("expanded");
 });
 
 sideMenu.addEventListener("mouseleave", () => {
-  sideMenu.classList.remove("expanded");
+  closeTimer = setTimeout(() => {
+    sideMenu.classList.remove("expanded");
+  }, 200);
 });
 
-/* STAR BACKGROUND */
+/* ===============================
+   STAR BACKGROUND
+   =============================== */
 const canvas=document.getElementById("starCanvas");
 const ctx=canvas.getContext("2d");
 let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
 const MAX_SPEED=1.5;
 
-function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+function resizeCanvas(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+}
 resizeCanvas();
 window.addEventListener("resize",resizeCanvas);
 
@@ -133,56 +175,9 @@ class Star{
     this.y+=this.vy;
     if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
     if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
-
-    if(this.gravity>0){
-      stars.forEach(s=>{
-        if(s!==this&&!s.exploding){
-          const dx=this.x-s.x,dy=this.y-s.y;
-          const dist=Math.sqrt(dx*dx+dy*dy);
-          if(dist<200){
-            s.vx+=dx/dist*0.015;
-            s.vy+=dy/dist*0.015;
-          }
-        }
-      });
-    }
-
-    stars.forEach(s=>{
-      if(s!==this&&!s.exploding){
-        const dx=this.x-s.x,dy=this.y-s.y;
-        const dist=Math.sqrt(dx*dx+dy*dy);
-        const minDist=this.size+s.size;
-        if(dist<minDist){
-          const angle=Math.atan2(dy,dx);
-          const force=0.3;
-          this.vx+=Math.cos(angle)*force;
-          this.vy+=Math.sin(angle)*force;
-          s.vx-=Math.cos(angle)*force;
-          s.vy-=Math.sin(angle)*force;
-          if(this.isLarge)this.explode();
-          if(s.isLarge)s.explode();
-        }
-      }
-    });
-
     this.limitSpeed();
   }
-  explode(){
-    this.exploding=true;
-    const pieces=6;
-    for(let i=0;i<pieces;i++){
-      const p=new Star(false);
-      p.x=this.x;
-      p.y=this.y;
-      const angle=(Math.PI*2/pieces)*i;
-      p.vx=Math.cos(angle)*1.5;
-      p.vy=Math.sin(angle)*1.5;
-      stars.push(p);
-    }
-    this.size=0;
-  }
   draw(){
-    if(this.exploding&&this.size<=0)return;
     ctx.beginPath();
     ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
     ctx.fillStyle=this.color;
@@ -195,7 +190,6 @@ class Star{
 }
 
 for(let i=0;i<80;i++)stars.push(new Star());
-setInterval(()=>{if(stars.length<160)stars.push(new Star(Math.random()<0.1));},150);
 
 window.addEventListener("mousemove",e=>{
   mouse.x=e.clientX;
@@ -203,8 +197,7 @@ window.addEventListener("mousemove",e=>{
 });
 
 function drawConnections(){
-  const sorted=[...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse());
-  const closest=sorted.slice(0,12);
+  const closest=[...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse()).slice(0,12);
   closest.forEach(star=>{
     const dist=star.distanceToMouse();
     const alpha=Math.max(0,1-dist/300);
@@ -212,7 +205,6 @@ function drawConnections(){
     ctx.moveTo(mouse.x,mouse.y);
     ctx.lineTo(star.x,star.y);
     ctx.strokeStyle=`rgba(255,255,255,${alpha*0.6})`;
-    ctx.lineWidth=1;
     ctx.stroke();
   });
 }
