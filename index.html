@@ -3,155 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
-
 <style>
 /* GLOBAL */
 * { box-sizing: border-box; scroll-behavior: smooth; }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0f1a;
-  color: #eaeaea;
-  overflow-x: hidden;
-}
+body { margin: 0; font-family: Arial, sans-serif; background: #0b0f1a; color: #eaeaea; overflow-x: hidden; }
 
-/* STAR CANVAS */
-#starCanvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-}
+#starCanvas { position: fixed; inset: 0; z-index: -1; }
 
-/* SIDE MENU */
 .side-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 70px;
-  background: rgba(15, 15, 25, 0.85);
-  backdrop-filter: blur(10px);
-  overflow: hidden;
-  transition: width 0.45s cubic-bezier(.4,0,.2,1);
-  z-index: 1000;
+  position: fixed; top: 0; left: 0; height: 100vh; width: 70px;
+  background: rgba(15,15,25,0.85); backdrop-filter: blur(10px); overflow: hidden;
+  transition: width 0.45s cubic-bezier(.4,0,.2,1); z-index: 1000;
 }
 
-.side-menu.expanded {
-  width: 50vw;
-}
+.side-menu.expanded { width: 50vw; }
 
-/* MENU LABEL */
 .menu-label {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  letter-spacing: 2px;
+  height: 70px; display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: bold; cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.1); letter-spacing: 2px;
 }
 
-/* MENU CONTENT */
-.menu-content {
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.3s ease, transform 0.4s ease;
-  padding-top: 40px;
-  text-align: center;
+.menu-content { opacity: 0; transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.4s ease; padding-top: 40px; text-align: center;
 }
 
-.side-menu.expanded .menu-content {
-  opacity: 1;
-  transform: translateX(0);
-}
+.side-menu.expanded .menu-content { opacity: 1; transform: translateX(0); }
 
-.menu-content a {
-  display: block;
-  padding: 18px;
-  font-size: 20px;
-  color: #aaa;
-  text-decoration: none;
-  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
-}
+.menu-content a { display: block; padding: 18px; font-size: 20px; color: #aaa; text-decoration: none; transition: background 0.25s, color 0.25s, transform 0.2s; }
 
-.menu-content a:hover {
-  background: rgba(255,255,255,0.08);
-  color: white;
-  transform: translateX(6px);
-}
+.menu-content a:hover { background: rgba(255,255,255,0.08); color: white; transform: translateX(6px); }
 
-/* CONTENT */
-.content {
-  padding: 80px 40px 40px 120px;
-}
+.content { padding: 80px 40px 40px 120px; }
 
-section {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  padding: 40px;
-  margin-bottom: 40px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
+section { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); padding: 40px; margin-bottom: 40px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 </style>
-
 </head>
 <body>
 <canvas id="starCanvas"></canvas>
 
-  <!-- LEFT MENU -->
-  <div class="side-menu" id="sideMenu">
-    <div class="menu-label">INDEX</div>
-    <div class="menu-content">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="skills.html">Skills</a>
-      <a href="projects.html">Projects</a>
-      <a href="experience.html">Experience</a>
-      <a href="goals.html">Goals</a>
-      <a href="contact.html">Contact</a>
-    </div>
+<div class="side-menu" id="sideMenu">
+  <div class="menu-label">INDEX</div>
+  <div class="menu-content">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="skills.html">Skills</a>
+    <a href="projects.html">Projects</a>
+    <a href="experience.html">Experience</a>
+    <a href="goals.html">Goals</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" id="adminLink">Admin Login</a>
   </div>
-
-  <!-- MAIN CONTENT -->
-<div class="content">
-  <h1>Adrian Zamora</h1>
-  <p>Welcome! This is my homepage where you can view most of what I worked on and when I made it.</p>
-  <p>Intro</p>
-  <p>My name is <strong>Adrian Zamora</strong></p>
-  <p>Born in <strong>Las Vegas, Nevada</strong></p>
-  <h3>Date Of Birth</h3>
-  <p>05/13/2008</p>
 </div>
 
-  <!-- CLICK-TO-EXPAND MENU -->
+<div class="content">
+  <h1>Welcome to My Portfolio</h1>
+  <p>This is the home page. Explore the menu to learn more about me and my work.</p>
+</div>
+
 <script>
 /* MENU */
 const sideMenu = document.getElementById("sideMenu");
 const menuLabel = document.querySelector(".menu-label");
-
-menuLabel.addEventListener("click", () => {
-  sideMenu.classList.toggle("expanded");
-});
-
-window.addEventListener("load", () => {
-  sideMenu.classList.remove("expanded");
-});
+menuLabel.addEventListener("click", () => { sideMenu.classList.toggle("expanded"); });
+window.addEventListener("load", () => { sideMenu.classList.remove("expanded"); });
 
 /* STAR BACKGROUND */
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
-let stars = [];
-let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
-const MAX_SPEED = 1.5; // <-- cap max speed
-
-function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
+let stars = [], mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+const MAX_SPEED = 1.5;
+function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
@@ -159,148 +82,40 @@ class Star {
   constructor(isLarge=false){
     this.isLarge = isLarge;
     this.size = isLarge ? Math.random()*4+3 : Math.random()*1.5+0.5;
-    this.x = Math.random()*canvas.width;
-    this.y = Math.random()*canvas.height;
+    this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height;
     this.vx = (Math.random()-0.5)*(isLarge?0.8:1.2);
     this.vy = (Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.gravity = isLarge?0.2:0;
-    this.color = "white";
-    this.exploding = false;
+    this.gravity = isLarge?0.2:0; this.color = "white"; this.exploding=false;
   }
-
-  // Limit velocity to MAX_SPEED
-  limitSpeed(){
-    const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
-    if(speed > MAX_SPEED){
-      const scale = MAX_SPEED / speed;
-      this.vx *= scale;
-      this.vy *= scale;
-    }
-  }
-
+  limitSpeed(){ const speed=Math.sqrt(this.vx*this.vx + this.vy*this.vy); if(speed>MAX_SPEED){ const scale=MAX_SPEED/speed; this.vx*=scale; this.vy*=scale; } }
   update(){
     if(this.exploding) return;
-
-    this.x += this.vx;
-    this.y += this.vy;
-
-    // Bounce off walls
-    if(this.x<=0 || this.x>=canvas.width) this.vx*=-1;
-    if(this.y<=0 || this.y>=canvas.height) this.vy*=-1;
-
-    // Gravity effect
+    this.x+=this.vx; this.y+=this.vy;
+    if(this.x<=0||this.x>=canvas.width) this.vx*=-1;
+    if(this.y<=0||this.y>=canvas.height) this.vy*=-1;
     if(this.gravity>0){
-      stars.forEach(s=>{
-        if(s!==this && !s.exploding){
-          const dx = this.x - s.x;
-          const dy = this.y - s.y;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          if(dist<200){
-            s.vx += dx/dist*0.015; // slightly weaker pull
-            s.vy += dy/dist*0.015;
-          }
-        }
-      });
+      stars.forEach(s=>{ if(s!==this&&!s.exploding){ const dx=this.x-s.x, dy=this.y-s.y, dist=Math.sqrt(dx*dx+dy*dy); if(dist<200){ s.vx+=dx/dist*0.015; s.vy+=dy/dist*0.015; } } });
     }
-
-    // Collision with other stars
-    stars.forEach(s=>{
-      if(s!==this && !s.exploding){
-        const dx = this.x - s.x;
-        const dy = this.y - s.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        const minDist = this.size + s.size;
-        if(dist < minDist){
-          // Bounce away
-          const angle = Math.atan2(dy, dx);
-          const force = 0.3; // smaller force to reduce speed
-          this.vx += Math.cos(angle)*force;
-          this.vy += Math.sin(angle)*force;
-          s.vx -= Math.cos(angle)*force;
-          s.vy -= Math.sin(angle)*force;
-
-          // Explode large star
-          if(this.isLarge) this.explode();
-          if(s.isLarge) s.explode();
-        }
-      }
-    });
-
-    this.limitSpeed(); // enforce max speed
+    stars.forEach(s=>{ if(s!==this&&!s.exploding){ const dx=this.x-s.x, dy=this.y-s.y, dist=Math.sqrt(dx*dx+dy*dy), minDist=this.size+s.size; if(dist<minDist){ const angle=Math.atan2(dy,dx), force=0.3; this.vx+=Math.cos(angle)*force; this.vy+=Math.sin(angle)*force; s.vx-=Math.cos(angle)*force; s.vy-=Math.sin(angle)*force; if(this.isLarge) this.explode(); if(s.isLarge) s.explode(); } } });
+    this.limitSpeed();
   }
-
-  explode(){
-    this.exploding = true;
-    const pieces = 6; // fewer pieces to reduce speed chaos
-    for(let i=0;i<pieces;i++){
-      const p = new Star(false);
-      p.x = this.x;
-      p.y = this.y;
-      const angle = (Math.PI*2/pieces)*i;
-      p.vx = Math.cos(angle)*1.5; // limited speed
-      p.vy = Math.sin(angle)*1.5;
-      stars.push(p);
-    }
-    this.size = 0;
-  }
-
-  draw(){
-    if(this.exploding && this.size<=0) return;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-  }
-
-  distanceToMouse(){
-    const dx = this.x - mouse.x;
-    const dy = this.y - mouse.y;
-    return Math.sqrt(dx*dx + dy*dy);
-  }
+  explode(){ this.exploding=true; const pieces=6; for(let i=0;i<pieces;i++){ const p=new Star(false); p.x=this.x; p.y=this.y; const angle=(Math.PI*2/pieces)*i; p.vx=Math.cos(angle)*1.5; p.vy=Math.sin(angle)*1.5; stars.push(p); } this.size=0; }
+  draw(){ if(this.exploding&&this.size<=0) return; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); }
+  distanceToMouse(){ const dx=this.x-mouse.x, dy=this.y-mouse.y; return Math.sqrt(dx*dx+dy*dy); }
 }
 
-// Initial stars
 for(let i=0;i<80;i++) stars.push(new Star());
-
-// Spawn stars
-function spawnStars(){
-  if(stars.length < 160){
-    stars.push(new Star(Math.random()<0.1));
-  }
-}
-setInterval(spawnStars, 150);
-
-// Track mouse
-window.addEventListener("mousemove", e=>{
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-// Draw lines to closest stars
-function drawConnections(){
-  const sorted = [...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse());
-  const closest = sorted.slice(0,12);
-  closest.forEach(star=>{
-    const dist = star.distanceToMouse();
-    const alpha = Math.max(0,1-dist/300);
-    ctx.beginPath();
-    ctx.moveTo(mouse.x, mouse.y);
-    ctx.lineTo(star.x, star.y);
-    ctx.strokeStyle = `rgba(255,255,255,${alpha*0.6})`;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-  });
-}
-
-// Animate
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(s=>{s.update(); s.draw();});
-  drawConnections();
-  requestAnimationFrame(animate);
-}
+setInterval(()=>{ if(stars.length<160) stars.push(new Star(Math.random()<0.1)); },150);
+window.addEventListener("mousemove", e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+function drawConnections(){ const sorted=[...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse()); const closest=sorted.slice(0,12); closest.forEach(star=>{ const dist=star.distanceToMouse(); const alpha=Math.max(0,1-dist/300); ctx.beginPath(); ctx.moveTo(mouse.x,mouse.y); ctx.lineTo(star.x,star.y); ctx.strokeStyle=`rgba(255,255,255,${alpha*0.6})`; ctx.lineWidth=1; ctx.stroke(); }); }
+function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); stars.forEach(s=>{s.update();s.draw();}); drawConnections(); requestAnimationFrame(animate); }
 animate();
-</script>
 
+/* ADMIN LOGIN */
+const ADMIN_USERNAME="admin";
+const ADMIN_PASSWORD="1234";
+const adminLink=document.getElementById("adminLink");
+adminLink.addEventListener("click",()=>{ const username=prompt("Enter admin username:"), password=prompt("Enter admin password:"); if(username===ADMIN_USERNAME&&password===ADMIN_PASSWORD){ alert("Welcome, admin!"); }else{ alert("Incorrect username or password."); }});
+</script>
 </body>
 </html>
