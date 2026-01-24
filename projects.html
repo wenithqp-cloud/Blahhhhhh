@@ -51,12 +51,6 @@ window.addEventListener("mousemove",e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
 function drawConnections(){const sorted=[...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse());const closest=sorted.slice(0,12);closest.forEach(star=>{const dist=star.distanceToMouse();const alpha=Math.max(0,1-dist/300);ctx.beginPath();ctx.moveTo(mouse.x,mouse.y);ctx.lineTo(star.x,star.y);ctx.strokeStyle=`rgba(255,255,255,${alpha*0.6})`;ctx.lineWidth=1;ctx.stroke();});}
 function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{s.update();s.draw();});drawConnections();requestAnimationFrame(animate);}
 animate();
-
-// ADMIN LOGIN
-const ADMIN_USERNAME="admin";
-const ADMIN_PASSWORD="1234";
-const adminLink=document.getElementById("adminLink");
-adminLink.addEventListener("click",()=>{const username=prompt("Enter admin username:"),password=prompt("Enter admin password:");if(username===ADMIN_USERNAME&&password===ADMIN_PASSWORD){alert("Welcome, admin!");}else{alert("Incorrect username or password.");}});
 </script>
 </body>
 </html>
