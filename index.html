@@ -112,59 +112,6 @@ function drawConnections(){ const sorted=[...stars].sort((a,b)=>a.distanceToMous
 function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); stars.forEach(s=>{s.update();s.draw();}); drawConnections(); requestAnimationFrame(animate); }
 animate();
 
-/* =========================
-   ADMIN SECURITY SYSTEM
-   ========================= */
-
-/* CHANGE ADMIN USERNAME HERE */
-const ADMIN_USERNAME = "AZamora2008";
-
-/* SHA-256 HASH of password "**********"
-   (Password is NEVER stored in plain text) */
-const ADMIN_PASSWORD_HASH =
-"6ded103ccd6152d6e0081eb72a724cb48ed919a74599eecf41ec9dfd571e5a61";
-
-
-/* Utility: SHA-256 hashing */
-async function hash(text) {
-    const enc = new TextEncoder().encode(text);
-    const buf = await crypto.subtle.digest("SHA-256", enc);
-    return Array.from(new Uint8Array(buf))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
-}
-
-document.getElementById("adminLink").onclick = async () => {
-    const user = prompt("Admin username:");
-    const pass = prompt("Admin password:");
-
-    if (!user || !pass) return;
-
-    const hashed = await hash(pass);
-
-    if (user === ADMIN_USERNAME && hashed === ADMIN_PASSWORD_HASH) {
-
-        /* Simulated 2FA */
-        const authCode = Math.floor(100000 + Math.random() * 900000);
-
-        alert(
-            "Authorization code was sent to the admin email:\n" +
-            ADMIN_EMAIL
-        );
-
-        const entered = prompt("Enter the 6-digit authorization code:");
-
-        if (entered == authCode) {
-            alert("Admin access granted");
-            document.getElementById("protectedContent").style.display = "block";
-        } else {
-            alert("Invalid authorization code");
-        }
-
-    } else {
-        alert("Invalid admin credentials");
-    }
-};
 </script>
 </body>
 </html>
