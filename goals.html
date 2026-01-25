@@ -5,6 +5,17 @@
   <title>Goals</title>
 
 <style>
+  /* Start page invisible */
+body {
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Smooth fade */
+}
+
+/* When page loads, fade in */
+body.loaded {
+  opacity: 1;
+}
+
 *{box-sizing:border-box;scroll-behavior:smooth}
 
 body{
@@ -227,6 +238,14 @@ window.addEventListener('wheel', function(event) {
     // Wait 800ms before allowing another scroll
     setTimeout(() => { scrollDebounce = false }, 800);
 });
+    <script>
+  // When the page finishes loading
+  window.addEventListener("load", () => {
+    // Add the "loaded" class to fade in
+    document.body.classList.add("loaded");
+  });
+</script>
+
 </script>
 <!-- Hidden links for scroll navigation -->
 <a href="contact.html" class="next-page" style="display:none"></a>
