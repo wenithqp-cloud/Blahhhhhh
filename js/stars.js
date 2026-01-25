@@ -1,14 +1,11 @@
-/* ===============================
-   STARFIELD + MOUSE TRAILS
-   =============================== */
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
 
 let stars = [];
-const STAR_COUNT = 120;   // number of stars
+const STAR_COUNT = 120;
 let mouse = { x: null, y: null };
 
-// Resize canvas to fill screen
+// Resize canvas
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -16,13 +13,9 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-// Star constructor
+// Star class
 class Star {
   constructor() {
-    this.reset();
-  }
-
-  reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
     this.radius = Math.random() * 1.5 + 0.5;
@@ -41,7 +34,6 @@ class Star {
     this.x += this.vx;
     this.y += this.vy;
 
-    // Wrap stars around edges
     if (this.x < 0) this.x = canvas.width;
     if (this.x > canvas.width) this.x = 0;
     if (this.y < 0) this.y = canvas.height;
@@ -51,10 +43,8 @@ class Star {
   }
 }
 
-// Initialize stars
-for (let i = 0; i < STAR_COUNT; i++) {
-  stars.push(new Star());
-}
+// Init stars
+for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
 
 // Track mouse
 window.addEventListener("mousemove", (e) => {
@@ -66,19 +56,18 @@ window.addEventListener("mouseleave", () => {
   mouse.y = null;
 });
 
-// Draw lines between nearby stars & cursor
+// Draw connections
 function connectStars() {
-  const maxDistance = 120;
-
+  const maxDist = 120;
   for (let i = 0; i < stars.length; i++) {
     for (let j = i + 1; j < stars.length; j++) {
-      const dx = stars[i].x - stars[j].x;
-      const dy = stars[i].y - stars[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      let dx = stars[i].x - stars[j].x;
+      let dy = stars[i].y - stars[j].y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (dist < maxDistance) {
+      if (dist < maxDist) {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(255,255,255,${1 - dist / maxDistance})`;
+        ctx.strokeStyle = `rgba(255,255,255,${1 - dist / maxDist})`;
         ctx.lineWidth = 0.7;
         ctx.moveTo(stars[i].x, stars[i].y);
         ctx.lineTo(stars[j].x, stars[j].y);
@@ -86,15 +75,14 @@ function connectStars() {
       }
     }
 
-    // Connect stars to cursor
     if (mouse.x !== null && mouse.y !== null) {
-      const dx = stars[i].x - mouse.x;
-      const dy = stars[i].y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      let dx = stars[i].x - mouse.x;
+      let dy = stars[i].y - mouse.y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (dist < maxDistance) {
+      if (dist < maxDist) {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(255,255,255,${1 - dist / maxDistance})`;
+        ctx.strokeStyle = `rgba(255,255,255,${1 - dist / maxDist})`;
         ctx.lineWidth = 0.7;
         ctx.moveTo(stars[i].x, stars[i].y);
         ctx.lineTo(mouse.x, mouse.y);
@@ -104,9 +92,9 @@ function connectStars() {
   }
 }
 
-// Animation loop
+// Animate
 function animate() {
-  ctx.fillStyle = "rgba(11,15,26,0.6)"; // semi-transparent to create trails
+  ctx.fillStyle = "rgba(11,15,26,0.6)"; // background fade
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   stars.forEach(star => star.update());
