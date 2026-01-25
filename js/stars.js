@@ -1,76 +1,118 @@
+/* ===============================
+   STARFIELD + MOUSE TRAILS
+   =============================== */
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
 
-/* STAR BACKGROUND */
-const canvas=document.getElementById("starCanvas");
-const ctx=canvas.getContext("2d");
-let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
-const MAX_SPEED=1.5;
+let stars = [];
+const STAR_COUNT = 120;   // number of stars
+let mouse = { x: null, y: null };
 
-function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-resizeCanvas(); window.addEventListener("resize",resizeCanvas);
+// Resize canvas to fill screen
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 
-class Star{
-  constructor(isLarge=false){
-    this.isLarge=isLarge;
-    this.size=isLarge?Math.random()*4+3:Math.random()*1.5+0.5;
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.vx=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.vy=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.color="white"; this.exploding=false;
+// Star constructor
+class Star {
+  constructor() {
+    this.reset();
   }
-  limitSpeed(){
-    const speed=Math.sqrt(this.vx*this.vx+this.vy*this.vy);
-    if(speed>MAX_SPEED){ const scale=MAX_SPEED/speed; this.vx*=scale; this.vy*=scale; }
+
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.radius = Math.random() * 1.5 + 0.5;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
   }
-  update(){
-    if(this.exploding) return;
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.x<=0||this.x>=canvas.width) this.vx*=-1;
-    if(this.y<=0||this.y>=canvas.height) this.vy*=-1;
-    stars.forEach(s=>{
-      if(s!==this&&!s.exploding){
-        const dx=this.x-s.x, dy=this.y-s.y;
-        const dist=Math.sqrt(dx*dx+dy*dy);
-        const minDist=this.size+s.size;
-        if(dist<minDist){
-          const angle=Math.atan2(dy,dx), force=0.3;
-          this.vx+=Math.cos(angle)*force;
-          this.vy+=Math.sin(angle)*force;
-          s.vx-=Math.cos(angle)*force;
-          s.vy-=Math.sin(angle)*force;
-          if(this.isLarge||s.isLarge) this.explode();
-        }
-      }
-    });
-    this.limitSpeed();
-  }
-  explode(){
-    this.exploding=true;
-    for(let i=0;i<6;i++){
-      const p=new Star(false);
-      p.x=this.x; p.y=this.y;
-      const angle=(Math.PI*2/6)*i;
-      p.vx=Math.cos(angle)*1.5; p.vy=Math.sin(angle)*1.5;
-      stars.push(p);
-    }
-    this.size=0;
-  }
-  draw(){
-    if(this.exploding&&this.size<=0) return;
+
+  draw() {
     ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle=this.color; ctx.fill();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255,255,255,0.8)";
+    ctx.fill();
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    // Wrap stars around edges
+    if (this.x < 0) this.x = canvas.width;
+    if (this.x > canvas.width) this.x = 0;
+    if (this.y < 0) this.y = canvas.height;
+    if (this.y > canvas.height) this.y = 0;
+
+    this.draw();
   }
 }
 
-for(let i=0;i<80;i++) stars.push(new Star());
-setInterval(()=>{if(stars.length<160)stars.push(new Star(Math.random()<0.1));},150);
-window.addEventListener("mousemove",e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+// Initialize stars
+for (let i = 0; i < STAR_COUNT; i++) {
+  stars.push(new Star());
+}
 
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(s=>{s.update();s.draw();});
+// Track mouse
+window.addEventListener("mousemove", (e) => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+window.addEventListener("mouseleave", () => {
+  mouse.x = null;
+  mouse.y = null;
+});
+
+// Draw lines between nearby stars & cursor
+function connectStars() {
+  const maxDistance = 120;
+
+  for (let i = 0; i < stars.length; i++) {
+    for (let j = i + 1; j < stars.length; j++) {
+      const dx = stars[i].x - stars[j].x;
+      const dy = stars[i].y - stars[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < maxDistance) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(255,255,255,${1 - dist / maxDistance})`;
+        ctx.lineWidth = 0.7;
+        ctx.moveTo(stars[i].x, stars[i].y);
+        ctx.lineTo(stars[j].x, stars[j].y);
+        ctx.stroke();
+      }
+    }
+
+    // Connect stars to cursor
+    if (mouse.x !== null && mouse.y !== null) {
+      const dx = stars[i].x - mouse.x;
+      const dy = stars[i].y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < maxDistance) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(255,255,255,${1 - dist / maxDistance})`;
+        ctx.lineWidth = 0.7;
+        ctx.moveTo(stars[i].x, stars[i].y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+// Animation loop
+function animate() {
+  ctx.fillStyle = "rgba(11,15,26,0.6)"; // semi-transparent to create trails
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach(star => star.update());
+  connectStars();
+
   requestAnimationFrame(animate);
 }
-animate();
 
+animate();
