@@ -68,14 +68,38 @@ body.loaded {
   transform: translateX(0);
 }
 
+/* ===============================
+   MENU LINKS + ICONS
+   =============================== */
 .menu-content a {
-  display: block;
+  display: flex;            /* Flex for icon + label */
+  align-items: center;
   padding: 18px;
   font-size: 20px;
   color: #aaa;
   text-decoration: none;
-  transition: background 0.25s, color 0.25s, transform 0.2s;
+  transition: all 0.25s;
 }
+
+.menu-content a .icon {
+  display: inline-block;
+  width: 30px;              /* fixed width for alignment */
+  text-align: center;
+  margin-right: 10px;
+}
+
+.menu-content a .label {
+  opacity: 1;
+  transition: opacity 0.25s;
+}
+
+/* Hide labels when menu is collapsed */
+.side-menu:not(.expanded) .menu-content a .label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
 .menu-content a:hover {
   background: rgba(255,255,255,0.08);
   color: white;
