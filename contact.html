@@ -181,5 +181,27 @@ function animate(){
 }
 animate();
 </script>
+  <script>
+let scrollDebounce = false; // prevents multiple scrolls at once
+
+window.addEventListener('wheel', function(event) {
+    if(scrollDebounce) return; // ignore extra scrolls
+    scrollDebounce = true;
+
+    if(event.deltaY > 0) {
+        // Scroll down → go to next page
+        let nextPage = document.querySelector('a.next-page');
+        if(nextPage) window.location.href = nextPage.href;
+    } else {
+        // Scroll up → go to previous page
+        let prevPage = document.querySelector('a.prev-page');
+        if(prevPage) window.location.href = prevPage.href;
+    }
+
+    // Wait 800ms before allowing another scroll
+    setTimeout(() => { scrollDebounce = false }, 800);
+});
+</script>
+
 </body>
 </html>
