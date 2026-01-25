@@ -36,118 +36,13 @@
 
 <!-- ===== SCROLL NAV LINKS ===== -->
 <a href="about.html" class="next-page" style="display:none"></a>
-
+<script src="js/menu.js"></script>
+<script src="js/stars.js"></script>
+<script src="js/scroll.js"></script>
 <script>
-/* ===== MENU HOVER ===== */
-const sideMenu = document.getElementById("sideMenu");
-let closeTimer;
-
-sideMenu.addEventListener("mouseenter", () => {
-  clearTimeout(closeTimer);
-  sideMenu.classList.add("expanded");
-});
-sideMenu.addEventListener("mouseleave", () => {
-  closeTimer = setTimeout(() => sideMenu.classList.remove("expanded"), 200);
-});
-
-/* ===== STAR BACKGROUND ===== */
-const canvas = document.getElementById("starCanvas");
-const ctx = canvas.getContext("2d");
-let stars = [], mouse = {x: innerWidth/2, y: innerHeight/2};
-
-function resize() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-}
-resize();
-addEventListener("resize", resize);
-
-class Star {
-  constructor() {
-    this.x = Math.random()*canvas.width;
-    this.y = Math.random()*canvas.height;
-    this.vx = (Math.random()-0.5)*1.2;
-    this.vy = (Math.random()-0.5)*1.2;
-    this.size = Math.random()*1.5+0.5;
-  }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    if (this.x<=0||this.x>=canvas.width) this.vx*=-1;
-    if (this.y<=0||this.y>=canvas.height) this.vy*=-1;
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle="white";
-    ctx.fill();
-  }
-}
-
-for(let i=0;i<80;i++) stars.push(new Star());
-
-addEventListener("mousemove", e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(s => { s.update(); s.draw(); });
-  requestAnimationFrame(animate);
-}
-animate();
-
-/* ===== PAGE NAVIGATION ===== */
-let debounce = false;
-let touchStartY = 0;
-
-window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
-});
-
-function goTo(url) {
-  document.body.classList.remove("loaded");
-  setTimeout(() => location.href = url, 500);
-}
-
-window.addEventListener("wheel", e => {
-  if (debounce) return;
-  debounce = true;
-  if (e.deltaY > 0) {
-    const n = document.querySelector(".next-page");
-    if (n) goTo(n.href);
-  }
-  setTimeout(() => debounce=false, 800);
-});
-
-window.addEventListener("keydown", e => {
-  if (debounce) return;
-  if (["ArrowDown","ArrowRight"].includes(e.key)) {
-    const n = document.querySelector(".next-page");
-    if (n) {
-      debounce = true;
-      goTo(n.href);
-    }
-  }
-  setTimeout(() => debounce=false, 800);
-});
-
-window.addEventListener("touchstart", e => {
-  touchStartY = e.touches[0].clientY;
-});
-window.addEventListener("touchend", e => {
-  if (debounce) return;
-  const diff = touchStartY - e.changedTouches[0].clientY;
-  if (diff > 50) {
-    const n = document.querySelector(".next-page");
-    if (n) {
-      debounce = true;
-      goTo(n.href);
-    }
-  }
-  setTimeout(() => debounce=false, 800);
-});
+  window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+  });
 </script>
 
 </body>
