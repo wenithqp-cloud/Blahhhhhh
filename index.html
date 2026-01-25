@@ -5,6 +5,17 @@
   <title>Home</title>
 
 <style>
+  /* Start page invisible */
+body {
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Smooth fade */
+}
+
+/* When page loads, fade in */
+body.loaded {
+  opacity: 1;
+}
+
 *{box-sizing:border-box;scroll-behavior:smooth}
 
 body{
@@ -245,6 +256,14 @@ window.addEventListener('wheel', function(event) {
     setTimeout(() => { scrollDebounce = false }, 800);
 });
 </script>
+  <script>
+  // When the page finishes loading
+  window.addEventListener("load", () => {
+    // Add the "loaded" class to fade in
+    document.body.classList.add("loaded");
+  });
+</script>
+
 <!-- Hidden links for scroll navigation -->
 <a href="about.html" class="next-page" style="display:none"></a>
 <!-- No previous page for the first page -->
