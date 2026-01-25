@@ -4,52 +4,103 @@
   <meta charset="UTF-8">
   <title>About</title>
 <style>
-  /* Start page invisible */
+/* Fade in on load */
 body {
   opacity: 0;
-  transition: opacity 0.5s ease; /* Smooth fade */
+  transition: opacity 0.5s ease;
 }
-
-/* When page loads, fade in */
 body.loaded {
   opacity: 1;
 }
 
-*{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:#0b0f1a;color:#eaeaea;overflow-x:hidden}
-#starCanvas{position:fixed;inset:0;z-index:-1}
-.side-menu{
-  position:fixed;top:0;left:0;height:100vh;width:70px;
-  background:rgba(15,15,25,0.85);
-  backdrop-filter:blur(10px);
-  overflow:hidden;
-  transition:width 0.45s cubic-bezier(.4,0,.2,1);
-  z-index:1000
+* { box-sizing: border-box; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #eaeaea;
+  overflow-x: hidden;
 }
-.side-menu.expanded{width:50vw}
-.menu-label{
-  height:70px;display:flex;align-items:center;justify-content:center;
-  color:white;font-weight:bold;cursor:pointer;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  letter-spacing:2px
+
+#starCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
 }
-.menu-content{
-  opacity:0;transform:translateX(-20px);
-  transition:opacity 0.3s ease,transform 0.4s ease;
-  padding-top:40px;text-align:center
+
+/* SIDE MENU */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  background: rgba(15,15,25,0.85);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: width 0.45s cubic-bezier(.4,0,.2,1);
+  z-index: 1000;
 }
-.side-menu.expanded .menu-content{opacity:1;transform:translateX(0)}
-.menu-content a{
-  display:block;padding:18px;font-size:20px;color:#aaa;
-  text-decoration:none;
-  transition:background 0.25s,color 0.25s,transform 0.2s
+.side-menu.expanded { width: 50vw; }
+
+.menu-label {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  letter-spacing: 2px;
 }
-.menu-content a:hover{
-  background:rgba(255,255,255,0.08);
-  color:white;transform:translateX(6px)
+
+.menu-content {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  padding-top: 40px;
+  text-align: center;
 }
-.content{padding:80px 40px 40px 120px}
-section{background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);padding:40px;margin-bottom:40px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+
+.side-menu.expanded .menu-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.menu-content a {
+  display: block;
+  padding: 18px;
+  font-size: 20px;
+  color: #aaa;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s, transform 0.2s;
+}
+
+.menu-content a:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  transform: translateX(6px);
+}
+
+.menu-content a.active {
+  color: white;
+  background: rgba(255,255,255,0.12);
+  font-weight: bold;
+}
+
+.content {
+  padding: 80px 40px 40px 120px;
+}
+
+section {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  margin-bottom: 40px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
 </style>
 </head>
 <body>
@@ -59,18 +110,18 @@ section{background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);padding:40p
   <div class="menu-label">INDEX</div>
   <div class="menu-content">
     <a href="index.html">Home</a>
-    <a href="about.html">About</a>
+    <a href="about.html" class="active">About</a>
     <a href="skills.html">Skills</a>
     <a href="projects.html">Projects</a>
     <a href="experience.html">Experience</a>
     <a href="goals.html">Goals</a>
     <a href="contact.html">Contact</a>
- 
   </div>
 </div>
 
-<div class="content"> <h1>About Me</h1> 
-   <p>I’ve always learned best by building and experimenting with my own hands. Whether it’s taking apart a computer to see how it works or trying to fix something on my own, mistakes have been my favorite teachers. They show me how things really function and give me a sense of accomplishment that no test score ever could.</p>
+<div class="content">
+  <h1>About Me</h1>
+  <p>I’ve always learned best by building and experimenting with my own hands. Whether it’s taking apart a computer to see how it works or trying to fix something on my own, mistakes have been my favorite teachers. They show me how things really function and give me a sense of accomplishment that no test score ever could.</p>
 
   <p>One event that sparked my personal growth was my junior year school trip to New York City and Washington, D.C., for my Teaching and Training class. Leading up to the trip, I felt like I didn’t deserve to go. My grades and past actions made it hard to fully embrace the experience. Once there, I was placed in a group of four—Noe, Taeven, and Noe’s sister. While we all got along, my social anxiety kept me mostly on the sidelines. I took photos of the group from afar, experimenting with different angles and perspectives, which gave me my own unique view of the trip.</p>
 
@@ -82,24 +133,19 @@ section{background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);padding:40p
 </div>
 
 <script>
-/* ===============================
-   HOVER SIDE MENU
-   =============================== */
+/* SIDE MENU HOVER */
 const sideMenu = document.getElementById("sideMenu");
-sideMenu.addEventListener("mouseenter", () => { sideMenu.classList.add("expanded"); });
-sideMenu.addEventListener("mouseleave", () => { sideMenu.classList.remove("expanded"); });
-window.addEventListener("load", () => { sideMenu.classList.remove("expanded"); });
+sideMenu.addEventListener("mouseenter", () => sideMenu.classList.add("expanded"));
+sideMenu.addEventListener("mouseleave", () => sideMenu.classList.remove("expanded"));
 
-/* ===============================
-   STAR BACKGROUND
-   =============================== */
+/* STAR BACKGROUND */
 const canvas=document.getElementById("starCanvas");
 const ctx=canvas.getContext("2d");
 let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
 const MAX_SPEED=1.5;
 
 function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-resizeCanvas();window.addEventListener("resize",resizeCanvas);
+resizeCanvas(); window.addEventListener("resize",resizeCanvas);
 
 class Star{
   constructor(isLarge=false){
@@ -109,9 +155,7 @@ class Star{
     this.y=Math.random()*canvas.height;
     this.vx=(Math.random()-0.5)*(isLarge?0.8:1.2);
     this.vy=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.gravity=isLarge?0.2:0;
-    this.color="white";
-    this.exploding=false;
+    this.color="white"; this.exploding=false;
   }
   limitSpeed(){
     const speed=Math.sqrt(this.vx*this.vx+this.vy*this.vy);
@@ -122,7 +166,6 @@ class Star{
     this.x+=this.vx; this.y+=this.vy;
     if(this.x<=0||this.x>=canvas.width) this.vx*=-1;
     if(this.y<=0||this.y>=canvas.height) this.vy*=-1;
-
     stars.forEach(s=>{
       if(s!==this&&!s.exploding){
         const dx=this.x-s.x, dy=this.y-s.y;
@@ -144,7 +187,7 @@ class Star{
     this.exploding=true;
     for(let i=0;i<6;i++){
       const p=new Star(false);
-      p.x=this.x;p.y=this.y;
+      p.x=this.x; p.y=this.y;
       const angle=(Math.PI*2/6)*i;
       p.vx=Math.cos(angle)*1.5; p.vy=Math.sin(angle)*1.5;
       stars.push(p);
@@ -161,7 +204,6 @@ class Star{
 
 for(let i=0;i<80;i++) stars.push(new Star());
 setInterval(()=>{if(stars.length<160)stars.push(new Star(Math.random()<0.1));},150);
-
 window.addEventListener("mousemove",e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
 
 function animate(){
@@ -170,36 +212,26 @@ function animate(){
   requestAnimationFrame(animate);
 }
 animate();
-</script>
-  <script>
-let scrollDebounce = false; // prevents multiple scrolls at once
 
-window.addEventListener('wheel', function(event) {
-    if(scrollDebounce) return; // ignore extra scrolls
-    scrollDebounce = true;
-
-    if(event.deltaY > 0) {
-        // Scroll down → go to next page
-        let nextPage = document.querySelector('a.next-page');
-        if(nextPage) window.location.href = nextPage.href;
-    } else {
-        // Scroll up → go to previous page
-        let prevPage = document.querySelector('a.prev-page');
-        if(prevPage) window.location.href = prevPage.href;
-    }
-
-    // Wait 800ms before allowing another scroll
-    setTimeout(() => { scrollDebounce = false }, 800);
+/* SCROLL NAVIGATION */
+let scrollDebounce=false;
+window.addEventListener('wheel', function(event){
+  if(scrollDebounce) return;
+  scrollDebounce=true;
+  if(event.deltaY>0){
+    const next=document.querySelector('a.next-page');
+    if(next) window.location.href=next.href;
+  } else {
+    const prev=document.querySelector('a.prev-page');
+    if(prev) window.location.href=prev.href;
+  }
+  setTimeout(()=>{scrollDebounce=false;},800);
 });
-    <script>
-  // When the page finishes loading
-  window.addEventListener("load", () => {
-    // Add the "loaded" class to fade in
-    document.body.classList.add("loaded");
-  });
+
+/* FADE IN */
+window.addEventListener("load", ()=>{document.body.classList.add("loaded");});
 </script>
 
-</script>
 <!-- Hidden links for scroll navigation -->
 <a href="skills.html" class="next-page" style="display:none"></a>
 <a href="index.html" class="prev-page" style="display:none"></a>
