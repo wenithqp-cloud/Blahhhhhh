@@ -1,18 +1,30 @@
+/* ===============================
+   SCROLL NAVIGATION
+   =============================== */
+document.addEventListener("DOMContentLoaded", () => {
+  // Find hidden next/prev page links
+  const nextPageLink = document.querySelector("a.next-page");
+  const prevPageLink = document.querySelector("a.prev-page");
 
-/* SCROLL NAVIGATION */
-let scrollDebounce=false;
-window.addEventListener('wheel', function(event){
-  if(scrollDebounce) return;
-  scrollDebounce=true;
-  if(event.deltaY>0){
-    const next=document.querySelector('a.next-page');
-    if(next) window.location.href=next.href;
-  } else {
-    const prev=document.querySelector('a.prev-page');
-    if(prev) window.location.href=prev.href;
-  }
-  setTimeout(()=>{scrollDebounce=false;},800);
+  // Use arrow keys or swipe to navigate
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" && nextPageLink) {
+      window.location.href = nextPageLink.getAttribute("href");
+    } else if (e.key === "ArrowLeft" && prevPageLink) {
+      window.location.href = prevPageLink.getAttribute("href");
+    }
+  });
+
+  // Optional: smooth scroll to top when navigating
+  const links = document.querySelectorAll(".menu-content a");
+  links.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault(); // prevent default jump
+      const href = link.getAttribute("href");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        window.location.href = href;
+      }, 200); // small delay to allow smooth scroll
+    });
+  });
 });
-
-/* FADE IN */
-window.addEventListener("load", ()=>{document.body.classList.add("loaded");});
