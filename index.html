@@ -5,117 +5,101 @@
   <title>Home</title>
 
 <style>
-  /* Start page invisible */
+/* ===== FADE IN / OUT ===== */
 body {
   opacity: 0;
-  transition: opacity 0.5s ease; /* Smooth fade */
+  transition: opacity 0.5s ease;
 }
-
-/* When page loads, fade in */
 body.loaded {
   opacity: 1;
 }
 
-*{box-sizing:border-box;scroll-behavior:smooth}
+* { box-sizing: border-box; scroll-behavior: smooth; }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#0b0f1a;
-  color:#eaeaea;
-  overflow-x:hidden
-}
-
-#starCanvas{
-  position:fixed;
-  inset:0;
-  z-index:-1
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #eaeaea;
+  overflow-x: hidden;
 }
 
-/* SIDE MENU */
-.side-menu{
-  position:fixed;
-  top:0;
-  left:0;
-  height:100vh;
-  width:70px;
-  background:rgba(15,15,25,0.85);
-  backdrop-filter:blur(10px);
-  overflow:hidden;
-  transition:width 0.45s cubic-bezier(.4,0,.2,1);
-  z-index:1000
-}
-.side-menu.expanded{
-  width:50vw
-}
-
-.menu-label{
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-weight:bold;
-  letter-spacing:2px;
-  border-bottom:1px solid rgba(255,255,255,0.1)
-}
-
-.menu-content{
-  opacity:0;
-  transform:translateX(-20px);
-  transition:opacity 0.3s ease,transform 0.4s ease;
-  padding-top:40px;
-  text-align:center
-}
-.side-menu.expanded .menu-content{
-  opacity:1;
-  transform:translateX(0)
-}
-
-.menu-content a{
-  display:block;
-  padding:18px;
-  font-size:20px;
-  color:#aaa;
-  text-decoration:none;
-  transition:background 0.25s,color 0.25s,transform 0.2s
-}
-.menu-content a:hover{
-  background:rgba(255,255,255,0.08);
-  color:white;
-  transform:translateX(6px)
-}
-
-/* ACTIVE PAGE */
-.menu-content a.active{
-  color:white;
-  background:rgba(255,255,255,0.12);
-  font-weight:bold
-}
-
-.content{
-  padding:80px 40px 40px 120px
-}
-
-section{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  padding:40px;
-  margin-bottom:40px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3)
-}
-  .bottom-left-text {
+#starCanvas {
   position: fixed;
-  bottom: 20px;      /* distance from the bottom */
-  right: 20px;        /* distance from the right */
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.3); /* semi-transparent white */
-  font-weight: bold;
-  pointer-events: none; /* lets you click through it */
-  z-index: 500;     /* above background but below menu */
+  inset: 0;
+  z-index: -1;
 }
-  
+
+/* ===== SIDE MENU ===== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  background: rgba(15,15,25,0.85);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: width 0.45s cubic-bezier(.4,0,.2,1);
+  z-index: 1000;
+}
+.side-menu.expanded {
+  width: 50vw;
+}
+
+.menu-label {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.menu-content {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  padding-top: 40px;
+  text-align: center;
+}
+.side-menu.expanded .menu-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.menu-content a {
+  display: block;
+  padding: 18px;
+  font-size: 20px;
+  color: #aaa;
+  text-decoration: none;
+}
+.menu-content a:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+.menu-content a.active {
+  color: white;
+  background: rgba(255,255,255,0.12);
+  font-weight: bold;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  padding: 80px 40px 40px 120px;
+}
+
+.bottom-left-text {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.3);
+  font-weight: bold;
+  pointer-events: none;
+}
 </style>
 </head>
 
@@ -136,136 +120,131 @@ section{
 </div>
 
 <div class="content">
-  <h1>Hello, My name is <center><strong style="font-size:40px;">Adrian Zamora</strong></center></h1>
-  <p style="font-size:20px;"><strong>Date Of Birth</strong></p>
-  <p style="font-size:20px;">05/13/2008</p>
-  <p style="font-size:20px;">Born In <strong style="font-size:25px;"> Las Vegas, Nevada</strong></p>
- 
+  <h1>Hello, My name is<br><strong style="font-size:40px;">Adrian Zamora</strong></h1>
+  <p><strong>Date Of Birth</strong></p>
+  <p>05/13/2008</p>
+  <p>Born in <strong>Las Vegas, Nevada</strong></p>
+
   <div class="bottom-left-text">
-  Adrian Zamora &copy; 2026
+    Adrian Zamora © 2026
   </div>
 </div>
-</div>
 
-  
+<!-- ===== SCROLL NAV LINKS ===== -->
+<a href="about.html" class="next-page" style="display:none"></a>
+
 <script>
-/* ===============================
-   SIDE MENU – HOVER OPEN/CLOSE
-   =============================== */
-const sideMenu=document.getElementById("sideMenu");
+/* ===== MENU HOVER ===== */
+const sideMenu = document.getElementById("sideMenu");
 let closeTimer;
 
-sideMenu.addEventListener("mouseenter",()=>{
+sideMenu.addEventListener("mouseenter", () => {
   clearTimeout(closeTimer);
   sideMenu.classList.add("expanded");
 });
-
-sideMenu.addEventListener("mouseleave",()=>{
-  closeTimer=setTimeout(()=>{
-    sideMenu.classList.remove("expanded");
-  },200);
+sideMenu.addEventListener("mouseleave", () => {
+  closeTimer = setTimeout(() => sideMenu.classList.remove("expanded"), 200);
 });
 
-/* ===============================
-   STAR BACKGROUND
-   =============================== */
-const canvas=document.getElementById("starCanvas");
-const ctx=canvas.getContext("2d");
-let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
-const MAX_SPEED=1.5;
+/* ===== STAR BACKGROUND ===== */
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
+let stars = [], mouse = {x: innerWidth/2, y: innerHeight/2};
 
-function resizeCanvas(){
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
+function resize() {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
 }
-resizeCanvas();
-window.addEventListener("resize",resizeCanvas);
+resize();
+addEventListener("resize", resize);
 
-class Star{
-  constructor(){
-    this.size=Math.random()*1.5+0.5;
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.vx=(Math.random()-0.5)*1.2;
-    this.vy=(Math.random()-0.5)*1.2;
+class Star {
+  constructor() {
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.vx = (Math.random()-0.5)*1.2;
+    this.vy = (Math.random()-0.5)*1.2;
+    this.size = Math.random()*1.5+0.5;
   }
-  update(){
-    this.x+=this.vx;
-    this.y+=this.vy;
-    if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
-    if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x<=0||this.x>=canvas.width) this.vx*=-1;
+    if (this.y<=0||this.y>=canvas.height) this.vy*=-1;
   }
-  draw(){
+  draw() {
     ctx.beginPath();
     ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
     ctx.fillStyle="white";
     ctx.fill();
   }
-  distanceToMouse(){
-    const dx=this.x-mouse.x,dy=this.y-mouse.y;
-    return Math.sqrt(dx*dx+dy*dy);
-  }
 }
 
-for(let i=0;i<80;i++)stars.push(new Star());
+for(let i=0;i<80;i++) stars.push(new Star());
 
-window.addEventListener("mousemove",e=>{
-  mouse.x=e.clientX;
-  mouse.y=e.clientY;
+addEventListener("mousemove", e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
 
-function drawConnections(){
-  const closest=[...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse()).slice(0,12);
-  closest.forEach(star=>{
-    const dist=star.distanceToMouse();
-    const alpha=Math.max(0,1-dist/300);
-    ctx.beginPath();
-    ctx.moveTo(mouse.x,mouse.y);
-    ctx.lineTo(star.x,star.y);
-    ctx.strokeStyle=`rgba(255,255,255,${alpha*0.6})`;
-    ctx.stroke();
-  });
-}
-
-function animate(){
+function animate() {
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(s=>{s.update();s.draw();});
-  drawConnections();
+  stars.forEach(s => { s.update(); s.draw(); });
   requestAnimationFrame(animate);
 }
 animate();
-</script>
-  <script>
-let scrollDebounce = false; // prevents multiple scrolls at once
 
-window.addEventListener('wheel', function(event) {
-    if(scrollDebounce) return; // ignore extra scrolls
-    scrollDebounce = true;
+/* ===== PAGE NAVIGATION ===== */
+let debounce = false;
+let touchStartY = 0;
 
-    if(event.deltaY > 0) {
-        // Scroll down → go to next page
-        let nextPage = document.querySelector('a.next-page');
-        if(nextPage) window.location.href = nextPage.href;
-    } else {
-        // Scroll up → go to previous page
-        let prevPage = document.querySelector('a.prev-page');
-        if(prevPage) window.location.href = prevPage.href;
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+
+function goTo(url) {
+  document.body.classList.remove("loaded");
+  setTimeout(() => location.href = url, 500);
+}
+
+window.addEventListener("wheel", e => {
+  if (debounce) return;
+  debounce = true;
+  if (e.deltaY > 0) {
+    const n = document.querySelector(".next-page");
+    if (n) goTo(n.href);
+  }
+  setTimeout(() => debounce=false, 800);
+});
+
+window.addEventListener("keydown", e => {
+  if (debounce) return;
+  if (["ArrowDown","ArrowRight"].includes(e.key)) {
+    const n = document.querySelector(".next-page");
+    if (n) {
+      debounce = true;
+      goTo(n.href);
     }
+  }
+  setTimeout(() => debounce=false, 800);
+});
 
-    // Wait 800ms before allowing another scroll
-    setTimeout(() => { scrollDebounce = false }, 800);
+window.addEventListener("touchstart", e => {
+  touchStartY = e.touches[0].clientY;
+});
+window.addEventListener("touchend", e => {
+  if (debounce) return;
+  const diff = touchStartY - e.changedTouches[0].clientY;
+  if (diff > 50) {
+    const n = document.querySelector(".next-page");
+    if (n) {
+      debounce = true;
+      goTo(n.href);
+    }
+  }
+  setTimeout(() => debounce=false, 800);
 });
 </script>
-  <script>
-  // When the page finishes loading
-  window.addEventListener("load", () => {
-    // Add the "loaded" class to fade in
-    document.body.classList.add("loaded");
-  });
-</script>
 
-<!-- Hidden links for scroll navigation -->
-<a href="about.html" class="next-page" style="display:none"></a>
-<!-- No previous page for the first page -->
 </body>
 </html>
