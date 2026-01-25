@@ -5,43 +5,38 @@
   <title>Projects</title>
 
 <style>
-  /* Start page invisible */
-body {
-  opacity: 0;
-  transition: opacity 0.5s ease; /* Smooth fade */
+/* ===============================
+   GLOBAL + FADE SYSTEM
+   =============================== */
+*{
+  box-sizing:border-box;
+  scroll-behavior:smooth
 }
 
-/* When page loads, fade in */
-body.loaded {
-  opacity: 1;
-}
-
-  /* Start page invisible */
-body {
-  opacity: 0;
-  transition: opacity 0.5s ease; /* Smooth fade */
-}
-
-/* When page loads, fade in */
-body.loaded {
-  opacity: 1;
-}
-
-*{box-sizing:border-box;scroll-behavior:smooth}
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#0b0f1a;
   color:#eaeaea;
-  overflow-x:hidden
+  overflow-x:hidden;
+
+  opacity:0;                     /* Start invisible */
+  transition:opacity 0.5s ease;  /* Fade timing */
 }
+
+body.loaded{
+  opacity:1;
+}
+
 #starCanvas{
   position:fixed;
   inset:0;
   z-index:-1
 }
 
-/* SIDE MENU */
+/* ===============================
+   SIDE MENU
+   =============================== */
 .side-menu{
   position:fixed;
   top:0;
@@ -95,7 +90,6 @@ body{
   transform:translateX(6px)
 }
 
-/* ACTIVE PAGE */
 .menu-content a.active{
   color:white;
   background:rgba(255,255,255,0.12);
@@ -105,20 +99,15 @@ body{
 .content{
   padding:80px 40px 40px 120px
 }
-section{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  padding:40px;
-  margin-bottom:40px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3)
-}
 </style>
 </head>
 
 <body>
 <canvas id="starCanvas"></canvas>
 
+<!-- ===============================
+     SIDE MENU
+     =============================== -->
 <div class="side-menu" id="sideMenu">
   <div class="menu-label">INDEX</div>
   <div class="menu-content">
@@ -132,14 +121,24 @@ section{
   </div>
 </div>
 
+<!-- ===============================
+     MAIN CONTENT
+     =============================== -->
 <div class="content">
   <h1>My Projects</h1>
-  <p>yo i swear ill add something right here and some picutures of it</p>
+  <p>Yeah I swear I’ll add real projects and images here 😭</p>
 </div>
 
 <script>
 /* ===============================
-   SIDE MENU – HOVER OPEN/CLOSE
+   PAGE FADE-IN ON LOAD
+   =============================== */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+
+/* ===============================
+   SIDE MENU HOVER
    =============================== */
 const sideMenu = document.getElementById("sideMenu");
 let closeTimer;
@@ -161,7 +160,6 @@ sideMenu.addEventListener("mouseleave", () => {
 const canvas=document.getElementById("starCanvas");
 const ctx=canvas.getContext("2d");
 let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
-const MAX_SPEED=1.5;
 
 function resizeCanvas(){
   canvas.width=window.innerWidth;
@@ -171,141 +169,65 @@ resizeCanvas();
 window.addEventListener("resize",resizeCanvas);
 
 class Star{
-  constructor(isLarge=false){
-    this.isLarge=isLarge;
-    this.size=isLarge?Math.random()*4+3:Math.random()*1.5+0.5;
+  constructor(){
+    this.size=Math.random()*1.5+0.5;
     this.x=Math.random()*canvas.width;
     this.y=Math.random()*canvas.height;
-    this.vx=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.vy=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.gravity=isLarge?0.2:0;
-    this.color="white";
-    this.exploding=false;
-  }
-  limitSpeed(){
-    const speed=Math.sqrt(this.vx*this.vx+this.vy*this.vy);
-    if(speed>MAX_SPEED){
-      const scale=MAX_SPEED/speed;
-      this.vx*=scale;
-      this.vy*=scale;
-    }
+    this.vx=(Math.random()-0.5);
+    this.vy=(Math.random()-0.5);
   }
   update(){
-    if(this.exploding)return;
     this.x+=this.vx;
     this.y+=this.vy;
     if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
     if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
-    this.limitSpeed();
   }
   draw(){
     ctx.beginPath();
     ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle=this.color;
+    ctx.fillStyle="white";
     ctx.fill();
-  }
-  distanceToMouse(){
-    const dx=this.x-mouse.x,dy=this.y-mouse.y;
-    return Math.sqrt(dx*dx+dy*dy);
   }
 }
 
 for(let i=0;i<80;i++)stars.push(new Star());
 
-window.addEventListener("mousemove",e=>{
-  mouse.x=e.clientX;
-  mouse.y=e.clientY;
-});
-
-function drawConnections(){
-  const closest=[...stars].sort((a,b)=>a.distanceToMouse()-b.distanceToMouse()).slice(0,12);
-  closest.forEach(star=>{
-    const dist=star.distanceToMouse();
-    const alpha=Math.max(0,1-dist/300);
-    ctx.beginPath();
-    ctx.moveTo(mouse.x,mouse.y);
-    ctx.lineTo(star.x,star.y);
-    ctx.strokeStyle=`rgba(255,255,255,${alpha*0.6})`;
-    ctx.stroke();
-  });
-}
-
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   stars.forEach(s=>{s.update();s.draw();});
-  drawConnections();
   requestAnimationFrame(animate);
 }
 animate();
-</script>
-  <script>
-let scrollDebounce = false; // prevents multiple scrolls at once
 
-window.addEventListener('wheel', function(event) {
-    if(scrollDebounce) return; // ignore extra scrolls
-    scrollDebounce = true;
+/* ===============================
+   SCROLL PAGE TRANSITION
+   =============================== */
+let scrollDebounce=false;
 
-    if(event.deltaY > 0) {
-        // Scroll down → go to next page
-        let nextPage = document.querySelector('a.next-page');
-        if(nextPage) window.location.href = nextPage.href;
-    } else {
-        // Scroll up → go to previous page
-        let prevPage = document.querySelector('a.prev-page');
-        if(prevPage) window.location.href = prevPage.href;
-    }
-
-    // Wait 800ms before allowing another scroll
-    setTimeout(() => { scrollDebounce = false }, 800);
-});
-</script>
-  <script>
-  // When the page finishes loading
-  window.addEventListener("load", () => {
-    // Add the "loaded" class to fade in
-    document.body.classList.add("loaded");
-  });
-</script>
-<script>
-  // When the page finishes loading
-  window.addEventListener("load", () => {
-    // Add the "loaded" class to fade in
-    document.body.classList.add("loaded");
-  });
-</script>
-
-<script>
-let scrollDebounce = false;
-
-function goToPage(url) {
-  // Fade out the page
-  document.body.classList.remove("loaded");
-
-  // Wait for fade animation to finish, then navigate
-  setTimeout(() => {
-    window.location.href = url;
-  }, 500); // matches CSS transition time
+function goToPage(url){
+  document.body.classList.remove("loaded"); // fade out
+  setTimeout(()=>window.location.href=url,500);
 }
 
-window.addEventListener("wheel", function(event) {
-  if (scrollDebounce) return;
-  scrollDebounce = true;
+window.addEventListener("wheel",event=>{
+  if(scrollDebounce)return;
+  scrollDebounce=true;
 
-  if (event.deltaY > 0) {
-    // Scroll down
-    let nextPage = document.querySelector("a.next-page");
-    if (nextPage) goToPage(nextPage.href);
-  } else {
-    // Scroll up
-    let prevPage = document.querySelector("a.prev-page");
-    if (prevPage) goToPage(prevPage.href);
+  if(event.deltaY>0){
+    const next=document.querySelector(".next-page");
+    if(next)goToPage(next.href);
+  }else{
+    const prev=document.querySelector(".prev-page");
+    if(prev)goToPage(prev.href);
   }
 
-  setTimeout(() => {
-    scrollDebounce = false;
-  }, 800);
+  setTimeout(()=>scrollDebounce=false,800);
 });
 </script>
+
+<!-- Hidden navigation -->
+<a href="experience.html" class="next-page" style="display:none"></a>
+<a href="skills.html" class="prev-page" style="display:none"></a>
 
 </body>
 </html>
