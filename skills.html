@@ -42,116 +42,15 @@
     <li>Photography</li>
   </ul>
 </div>
-
+<script src="js/menu.js"></script>
+<script src="js/stars.js"></script>
+<script src="js/scroll.js"></script>
 <script>
-/* ===============================
-   PAGE FADE-IN ON LOAD
-   =============================== */
-window.addEventListener("load", () => {
-  // Add class that fades page in
-  document.body.classList.add("loaded");
-});
-
-/* ===============================
-   SIDE MENU – HOVER OPEN/CLOSE
-   =============================== */
-const sideMenu = document.getElementById("sideMenu");
-let closeTimer;
-
-sideMenu.addEventListener("mouseenter", () => {
-  clearTimeout(closeTimer);
-  sideMenu.classList.add("expanded");
-});
-
-sideMenu.addEventListener("mouseleave", () => {
-  closeTimer = setTimeout(() => {
-    sideMenu.classList.remove("expanded");
-  }, 200);
-});
-
-/* ===============================
-   STAR BACKGROUND
-   =============================== */
-const canvas=document.getElementById("starCanvas");
-const ctx=canvas.getContext("2d");
-let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
-const MAX_SPEED=1.5;
-
-function resizeCanvas(){
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize",resizeCanvas);
-
-class Star{
-  constructor(isLarge=false){
-    this.isLarge=isLarge;
-    this.size=isLarge?Math.random()*4+3:Math.random()*1.5+0.5;
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.vx=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.vy=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.color="white";
-  }
-  update(){
-    this.x+=this.vx;
-    this.y+=this.vy;
-    if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
-    if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
-  }
-  draw(){
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle=this.color;
-    ctx.fill();
-  }
-}
-
-for(let i=0;i<80;i++)stars.push(new Star());
-
-window.addEventListener("mousemove",e=>{
-  mouse.x=e.clientX;
-  mouse.y=e.clientY;
-});
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(s=>{s.update();s.draw();});
-  requestAnimationFrame(animate);
-}
-animate();
-
-/* ===============================
-   SCROLL PAGE TRANSITION (FADE OUT)
-   =============================== */
-let scrollDebounce=false;
-
-// Handles fade-out then page switch
-function goToPage(url){
-  document.body.classList.remove("loaded"); // fade out
-  setTimeout(()=>{
-    window.location.href=url;
-  },500); // matches CSS transition time
-}
-
-window.addEventListener("wheel",event=>{
-  if(scrollDebounce)return;
-  scrollDebounce=true;
-
-  if(event.deltaY>0){
-    // Scroll down → next page
-    const next=document.querySelector(".next-page");
-    if(next)goToPage(next.href);
-  }else{
-    // Scroll up → previous page
-    const prev=document.querySelector(".prev-page");
-    if(prev)goToPage(prev.href);
-  }
-
-  setTimeout(()=>scrollDebounce=false,800);
-});
+  window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+  });
 </script>
+
 
 <!-- Hidden scroll navigation -->
 <a href="projects.html" class="next-page" style="display:none"></a>
