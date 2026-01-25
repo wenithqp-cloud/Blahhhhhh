@@ -4,51 +4,94 @@
   <meta charset="UTF-8">
   <title>Experience</title>
 <style>
-  /* Start page invisible */
+/* Fade in on load */
 body {
   opacity: 0;
-  transition: opacity 0.5s ease; /* Smooth fade */
+  transition: opacity 0.5s ease;
 }
-
-/* When page loads, fade in */
 body.loaded {
   opacity: 1;
 }
 
-*{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:#0b0f1a;color:#eaeaea;overflow-x:hidden}
-#starCanvas{position:fixed;inset:0;z-index:-1}
-.side-menu{
-  position:fixed;top:0;left:0;height:100vh;width:70px;
-  background:rgba(15,15,25,0.85);
-  backdrop-filter:blur(10px);
-  overflow:hidden;
-  transition:width 0.45s cubic-bezier(.4,0,.2,1);
-  z-index:1000
+* { box-sizing: border-box; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #eaeaea;
+  overflow-x: hidden;
 }
-.side-menu.expanded{width:50vw}
-.menu-label{
-  height:70px;display:flex;align-items:center;justify-content:center;
-  color:white;font-weight:bold;cursor:pointer;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  letter-spacing:2px
+
+#starCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
 }
-.menu-content{
-  opacity:0;transform:translateX(-20px);
-  transition:opacity 0.3s ease,transform 0.4s ease;
-  padding-top:40px;text-align:center
+
+/* SIDE MENU */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  background: rgba(15,15,25,0.85);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: width 0.45s cubic-bezier(.4,0,.2,1);
+  z-index: 1000;
 }
-.side-menu.expanded .menu-content{opacity:1;transform:translateX(0)}
-.menu-content a{
-  display:block;padding:18px;font-size:20px;color:#aaa;
-  text-decoration:none;
-  transition:background 0.25s,color 0.25s,transform 0.2s
+.side-menu.expanded { width: 50vw; }
+
+.menu-label {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  letter-spacing: 2px;
 }
-.menu-content a:hover{
-  background:rgba(255,255,255,0.08);
-  color:white;transform:translateX(6px)
+
+.menu-content {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  padding-top: 40px;
+  text-align: center;
 }
-.content{padding:80px 40px 40px 120px}
+
+.side-menu.expanded .menu-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.menu-content a {
+  display: block;
+  padding: 18px;
+  font-size: 20px;
+  color: #aaa;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s, transform 0.2s;
+}
+
+.menu-content a:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  transform: translateX(6px);
+}
+
+.menu-content a.active {
+  color: white;
+  background: rgba(255,255,255,0.12);
+  font-weight: bold;
+}
+
+.content {
+  padding: 80px 40px 40px 120px;
+}
 </style>
 </head>
 
@@ -62,13 +105,14 @@ body{margin:0;font-family:Arial,sans-serif;background:#0b0f1a;color:#eaeaea;over
     <a href="about.html">About</a>
     <a href="skills.html">Skills</a>
     <a href="projects.html">Projects</a>
-    <a href="experience.html">Experience</a>
+    <a href="experience.html" class="active">Experience</a>
     <a href="goals.html">Goals</a>
     <a href="contact.html">Contact</a>
   </div>
 </div>
 
-<div class="content"> <h1>My Experiences</h1> 
+<div class="content">
+  <h1>My Experiences</h1> 
   <p><strong>Learning Through Hands-On Projects:</strong> I’ve learned that the best way for me to understand something is by building it myself. Taking apart computers, experimenting with devices, and trying to fix mistakes has taught me patience, problem-solving, and resilience. Each failure became a lesson, helping me develop skills I can apply in school and work environments.</p> 
   
   <p><strong>School Trip to New York and Washington, D.C.:</strong> This trip taught me personal growth and the value of observation. Working through social anxiety, I learned how to navigate new environments and appreciate different perspectives. Photographing my group and exploring historic sites helped me develop attention to detail, planning, and creativity while building stronger bonds with peers.</p>
@@ -77,81 +121,72 @@ body{margin:0;font-family:Arial,sans-serif;background:#0b0f1a;color:#eaeaea;over
   
   <p><strong>Overall Lessons:</strong> From personal projects, school trips, and work experiences, I’ve learned the value of curiosity, persistence, and collaboration. These experiences have taught me to approach challenges with creativity, patience, and an openness to learning from mistakes.</p> 
 </div>
-  
+
 <script>
-/* ===============================
-   HOVER INDEX MENU (AUTO OPEN)
-   =============================== */
+/* SIDE MENU HOVER */
 const sideMenu = document.getElementById("sideMenu");
 
 sideMenu.addEventListener("mouseenter", () => {
   sideMenu.classList.add("expanded");
 });
-
 sideMenu.addEventListener("mouseleave", () => {
   sideMenu.classList.remove("expanded");
 });
 
-window.addEventListener("load", () => {
-  sideMenu.classList.remove("expanded");
-});
+/* STAR BACKGROUND */
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
+let stars = [], mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+const MAX_SPEED = 1.5;
 
-/* ===============================
-   STAR BACKGROUND
-   =============================== */
-const canvas=document.getElementById("starCanvas");
-const ctx=canvas.getContext("2d");
-let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
-const MAX_SPEED=1.5;
-
-function resizeCanvas(){
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 resizeCanvas();
-window.addEventListener("resize",resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
 
-class Star{
+class Star {
   constructor(isLarge=false){
-    this.isLarge=isLarge;
-    this.size=isLarge?Math.random()*4+3:Math.random()*1.5+0.5;
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.vx=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.vy=(Math.random()-0.5)*(isLarge?0.8:1.2);
-    this.gravity=isLarge?0.2:0;
-    this.color="white";
-    this.exploding=false;
+    this.isLarge = isLarge;
+    this.size = isLarge ? Math.random()*4+3 : Math.random()*1.5+0.5;
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random()-0.5) * (isLarge ? 0.8 : 1.2);
+    this.vy = (Math.random()-0.5) * (isLarge ? 0.8 : 1.2);
+    this.gravity = isLarge ? 0.2 : 0;
+    this.color = "white";
+    this.exploding = false;
   }
-  limitSpeed(){
-    const speed=Math.sqrt(this.vx*this.vx+this.vy*this.vy);
-    if(speed>MAX_SPEED){
-      const scale=MAX_SPEED/speed;
-      this.vx*=scale;
-      this.vy*=scale;
+  limitSpeed() {
+    const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+    if(speed > MAX_SPEED){
+      const scale = MAX_SPEED / speed;
+      this.vx *= scale;
+      this.vy *= scale;
     }
   }
   update(){
-    if(this.exploding)return;
-    this.x+=this.vx;
-    this.y+=this.vy;
+    if(this.exploding) return;
+    this.x += this.vx;
+    this.y += this.vy;
 
-    if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
-    if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
+    if(this.x<=0 || this.x>=canvas.width) this.vx *= -1;
+    if(this.y<=0 || this.y>=canvas.height) this.vy *= -1;
 
     stars.forEach(s=>{
-      if(s!==this&&!s.exploding){
-        const dx=this.x-s.x,dy=this.y-s.y;
+      if(s!==this && !s.exploding){
+        const dx=this.x-s.x, dy=this.y-s.y;
         const dist=Math.sqrt(dx*dx+dy*dy);
         const minDist=this.size+s.size;
         if(dist<minDist){
           const angle=Math.atan2(dy,dx);
           const force=0.3;
-          this.vx+=Math.cos(angle)*force;
-          this.vy+=Math.sin(angle)*force;
-          s.vx-=Math.cos(angle)*force;
-          s.vy-=Math.sin(angle)*force;
-          if(this.isLarge||s.isLarge)this.explode();
+          this.vx += Math.cos(angle)*force;
+          this.vy += Math.sin(angle)*force;
+          s.vx -= Math.cos(angle)*force;
+          s.vy -= Math.sin(angle)*force;
+          if(this.isLarge || s.isLarge) this.explode();
         }
       }
     });
@@ -159,73 +194,66 @@ class Star{
     this.limitSpeed();
   }
   explode(){
-    this.exploding=true;
+    this.exploding = true;
     for(let i=0;i<6;i++){
       const p=new Star(false);
-      p.x=this.x;p.y=this.y;
-      const a=(Math.PI*2/6)*i;
-      p.vx=Math.cos(a)*1.5;
-      p.vy=Math.sin(a)*1.5;
+      p.x=this.x; p.y=this.y;
+      const a = (Math.PI*2/6)*i;
+      p.vx = Math.cos(a)*1.5;
+      p.vy = Math.sin(a)*1.5;
       stars.push(p);
     }
     this.size=0;
   }
   draw(){
-    if(this.exploding&&this.size<=0)return;
+    if(this.exploding && this.size<=0) return;
     ctx.beginPath();
     ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle=this.color;
+    ctx.fillStyle = this.color;
     ctx.fill();
   }
 }
 
-for(let i=0;i<80;i++)stars.push(new Star());
-setInterval(()=>{if(stars.length<160)stars.push(new Star(Math.random()<0.1));},150);
+for(let i=0;i<80;i++) stars.push(new Star());
+setInterval(() => { if(stars.length<160) stars.push(new Star(Math.random()<0.1)); },150);
 
-window.addEventListener("mousemove",e=>{
-  mouse.x=e.clientX;
-  mouse.y=e.clientY;
+window.addEventListener("mousemove", e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
 
-function animate(){
+function animate() {
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(s=>{s.update();s.draw();});
+  stars.forEach(s => { s.update(); s.draw(); });
   requestAnimationFrame(animate);
 }
 animate();
-</script>
-  <script>
-let scrollDebounce = false; // prevents multiple scrolls at once
 
+/* SCROLL PAGE NAVIGATION */
+let scrollDebounce = false;
 window.addEventListener('wheel', function(event) {
-    if(scrollDebounce) return; // ignore extra scrolls
+    if(scrollDebounce) return;
     scrollDebounce = true;
 
     if(event.deltaY > 0) {
-        // Scroll down → go to next page
-        let nextPage = document.querySelector('a.next-page');
-        if(nextPage) window.location.href = nextPage.href;
+        const next = document.querySelector('a.next-page');
+        if(next) window.location.href = next.href;
     } else {
-        // Scroll up → go to previous page
-        let prevPage = document.querySelector('a.prev-page');
-        if(prevPage) window.location.href = prevPage.href;
+        const prev = document.querySelector('a.prev-page');
+        if(prev) window.location.href = prev.href;
     }
-
-    // Wait 800ms before allowing another scroll
-    setTimeout(() => { scrollDebounce = false }, 800);
+    setTimeout(() => { scrollDebounce = false; }, 800);
 });
-    <script>
-  // When the page finishes loading
-  window.addEventListener("load", () => {
-    // Add the "loaded" class to fade in
-    document.body.classList.add("loaded");
-  });
+
+/* FADE IN */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
 </script>
 
-</script>
 <!-- Hidden links for scroll navigation -->
-<a href="goals.html" class="next-page" style="display:none"></a>
-<a href="projects.html" class="prev-page" style="display:none"></a>
+<a href="goals.html" class="prev-page" style="display:none"></a>
+<a href="projects.html" class="next-page" style="display:none"></a>
 
 </body>
 </html>
