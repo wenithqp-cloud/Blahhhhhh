@@ -5,105 +5,102 @@
   <title>Goals</title>
 
 <style>
-  /* Start page invisible */
+/* Fade in on load */
 body {
   opacity: 0;
-  transition: opacity 0.5s ease; /* Smooth fade */
+  transition: opacity 0.5s ease;
 }
-
-/* When page loads, fade in */
 body.loaded {
   opacity: 1;
 }
 
-*{box-sizing:border-box;scroll-behavior:smooth}
+* { box-sizing: border-box; scroll-behavior: smooth }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#0b0f1a;
-  color:#eaeaea;
-  overflow-x:hidden
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #eaeaea;
+  overflow-x: hidden;
 }
 
-#starCanvas{
-  position:fixed;
-  inset:0;
-  z-index:-1
+#starCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
 }
 
 /* SIDE MENU */
-.side-menu{
-  position:fixed;
-  top:0;
-  left:0;
-  height:100vh;
-  width:70px;
-  background:rgba(15,15,25,0.85);
-  backdrop-filter:blur(10px);
-  overflow:hidden;
-  transition:width 0.45s cubic-bezier(.4,0,.2,1);
-  z-index:1000
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  background: rgba(15,15,25,0.85);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: width 0.45s cubic-bezier(.4,0,.2,1);
+  z-index: 1000;
 }
-.side-menu.expanded{
-  width:50vw
-}
-
-.menu-label{
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-weight:bold;
-  letter-spacing:2px;
-  border-bottom:1px solid rgba(255,255,255,0.1)
+.side-menu.expanded {
+  width: 50vw;
 }
 
-.menu-content{
-  opacity:0;
-  transform:translateX(-20px);
-  transition:opacity 0.3s ease,transform 0.4s ease;
-  padding-top:40px;
-  text-align:center
-}
-.side-menu.expanded .menu-content{
-  opacity:1;
-  transform:translateX(0)
-}
-
-.menu-content a{
-  display:block;
-  padding:18px;
-  font-size:20px;
-  color:#aaa;
-  text-decoration:none;
-  transition:background 0.25s,color 0.25s,transform 0.2s
-}
-.menu-content a:hover{
-  background:rgba(255,255,255,0.08);
-  color:white;
-  transform:translateX(6px)
+.menu-label {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ACTIVE PAGE */
-.menu-content a.active{
-  color:white;
-  background:rgba(255,255,255,0.12);
-  font-weight:bold
+.menu-content {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  padding-top: 40px;
+  text-align: center;
+}
+.side-menu.expanded .menu-content {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.content{
-  padding:80px 40px 40px 120px
+.menu-content a {
+  display: block;
+  padding: 18px;
+  font-size: 20px;
+  color: #aaa;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s, transform 0.2s;
+}
+.menu-content a:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  transform: translateX(6px);
 }
 
-section{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  padding:40px;
-  margin-bottom:40px;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3)
+.menu-content a.active {
+  color: white;
+  background: rgba(255,255,255,0.12);
+  font-weight: bold;
+}
+
+.content {
+  padding: 80px 40px 40px 120px;
+}
+
+section {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  margin-bottom: 40px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 </style>
 </head>
@@ -130,124 +127,117 @@ section{
 </div>
 
 <script>
-/* ===============================
-   SIDE MENU – HOVER OPEN/CLOSE
-   =============================== */
-const sideMenu=document.getElementById("sideMenu");
+/* SIDE MENU HOVER */
+const sideMenu = document.getElementById("sideMenu");
 let closeTimer;
 
-sideMenu.addEventListener("mouseenter",()=>{
+sideMenu.addEventListener("mouseenter", () => {
   clearTimeout(closeTimer);
   sideMenu.classList.add("expanded");
 });
 
-sideMenu.addEventListener("mouseleave",()=>{
-  closeTimer=setTimeout(()=>{
+sideMenu.addEventListener("mouseleave", () => {
+  closeTimer = setTimeout(() => {
     sideMenu.classList.remove("expanded");
-  },200);
+  }, 200);
 });
 
-/* ===============================
-   STAR BACKGROUND
-   =============================== */
-const canvas=document.getElementById("starCanvas");
-const ctx=canvas.getContext("2d");
-let stars=[],mouse={x:window.innerWidth/2,y:window.innerHeight/2};
+/* STAR BACKGROUND */
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
+let stars = [];
+let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-function resizeCanvas(){
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 resizeCanvas();
-window.addEventListener("resize",resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
 
-class Star{
-  constructor(){
-    this.size=Math.random()*1.5+0.5;
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.vx=(Math.random()-0.5)*1.2;
-    this.vy=(Math.random()-0.5)*1.2;
+class Star {
+  constructor() {
+    this.size = Math.random() * 1.5 + 0.5;
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 1.2;
+    this.vy = (Math.random() - 0.5) * 1.2;
   }
-  update(){
-    this.x+=this.vx;
-    this.y+=this.vy;
-    if(this.x<=0||this.x>=canvas.width)this.vx*=-1;
-    if(this.y<=0||this.y>=canvas.height)this.vy*=-1;
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
+    if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
   }
-  draw(){
+  draw() {
     ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle="white";
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = "white";
     ctx.fill();
   }
-  distanceToMouse(){
-    const dx=this.x-mouse.x,dy=this.y-mouse.y;
-    return Math.sqrt(dx*dx+dy*dy);
+  distanceToMouse() {
+    const dx = this.x - mouse.x;
+    const dy = this.y - mouse.y;
+    return Math.sqrt(dx * dx + dy * dy);
   }
 }
 
-for(let i=0;i<80;i++)stars.push(new Star());
+for (let i = 0; i < 80; i++) stars.push(new Star());
 
-window.addEventListener("mousemove",e=>{
-  mouse.x=e.clientX;
-  mouse.y=e.clientY;
+window.addEventListener("mousemove", e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
 
-function drawConnections(){
-  const closest=[...stars]
-    .sort((a,b)=>a.distanceToMouse()-b.distanceToMouse())
-    .slice(0,12);
+function drawConnections() {
+  const closest = [...stars]
+    .sort((a, b) => a.distanceToMouse() - b.distanceToMouse())
+    .slice(0, 12);
 
-  closest.forEach(star=>{
-    const dist=star.distanceToMouse();
-    const alpha=Math.max(0,1-dist/300);
+  closest.forEach(star => {
+    const dist = star.distanceToMouse();
+    const alpha = Math.max(0, 1 - dist / 300);
     ctx.beginPath();
-    ctx.moveTo(mouse.x,mouse.y);
-    ctx.lineTo(star.x,star.y);
-    ctx.strokeStyle=`rgba(255,255,255,${alpha*0.6})`;
+    ctx.moveTo(mouse.x, mouse.y);
+    ctx.lineTo(star.x, star.y);
+    ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.6})`;
     ctx.stroke();
   });
 }
 
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(s=>{s.update();s.draw();});
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => { s.update(); s.draw(); });
   drawConnections();
   requestAnimationFrame(animate);
 }
 animate();
-</script>
-  <script>
-let scrollDebounce = false; // prevents multiple scrolls at once
 
-window.addEventListener('wheel', function(event) {
-    if(scrollDebounce) return; // ignore extra scrolls
-    scrollDebounce = true;
+/* SCROLL PAGE NAVIGATION */
+let scrollDebounce = false;
 
-    if(event.deltaY > 0) {
-        // Scroll down → go to next page
-        let nextPage = document.querySelector('a.next-page');
-        if(nextPage) window.location.href = nextPage.href;
-    } else {
-        // Scroll up → go to previous page
-        let prevPage = document.querySelector('a.prev-page');
-        if(prevPage) window.location.href = prevPage.href;
-    }
+window.addEventListener("wheel", event => {
+  if (scrollDebounce) return;
+  scrollDebounce = true;
 
-    // Wait 800ms before allowing another scroll
-    setTimeout(() => { scrollDebounce = false }, 800);
+  if (event.deltaY > 0) {
+    const next = document.querySelector(".next-page");
+    if (next) window.location.href = next.href;
+  } else {
+    const prev = document.querySelector(".prev-page");
+    if (prev) window.location.href = prev.href;
+  }
+
+  setTimeout(() => scrollDebounce = false, 800);
 });
-    <script>
-  // When the page finishes loading
-  window.addEventListener("load", () => {
-    // Add the "loaded" class to fade in
-    document.body.classList.add("loaded");
-  });
+
+/* FADE IN */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
 </script>
 
-</script>
-<!-- Hidden links for scroll navigation -->
+<!-- Hidden scroll targets -->
 <a href="contact.html" class="next-page" style="display:none"></a>
 <a href="experience.html" class="prev-page" style="display:none"></a>
 
