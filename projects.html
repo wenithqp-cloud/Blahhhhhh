@@ -16,6 +16,17 @@ body.loaded {
   opacity: 1;
 }
 
+  /* Start page invisible */
+body {
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Smooth fade */
+}
+
+/* When page loads, fade in */
+body.loaded {
+  opacity: 1;
+}
+
 *{box-sizing:border-box;scroll-behavior:smooth}
 body{
   margin:0;
@@ -255,10 +266,46 @@ window.addEventListener('wheel', function(event) {
     document.body.classList.add("loaded");
   });
 </script>
+<script>
+  // When the page finishes loading
+  window.addEventListener("load", () => {
+    // Add the "loaded" class to fade in
+    document.body.classList.add("loaded");
+  });
+</script>
 
-<!-- Hidden links for scroll navigation -->
-<a href="experience.html" class="next-page" style="display:none"></a>
-<a href="skills.html" class="prev-page" style="display:none"></a>
-<!-- skills = previous page experience = next page -->
+<script>
+let scrollDebounce = false;
+
+function goToPage(url) {
+  // Fade out the page
+  document.body.classList.remove("loaded");
+
+  // Wait for fade animation to finish, then navigate
+  setTimeout(() => {
+    window.location.href = url;
+  }, 500); // matches CSS transition time
+}
+
+window.addEventListener("wheel", function(event) {
+  if (scrollDebounce) return;
+  scrollDebounce = true;
+
+  if (event.deltaY > 0) {
+    // Scroll down
+    let nextPage = document.querySelector("a.next-page");
+    if (nextPage) goToPage(nextPage.href);
+  } else {
+    // Scroll up
+    let prevPage = document.querySelector("a.prev-page");
+    if (prevPage) goToPage(prevPage.href);
+  }
+
+  setTimeout(() => {
+    scrollDebounce = false;
+  }, 800);
+});
+</script>
+
 </body>
 </html>
