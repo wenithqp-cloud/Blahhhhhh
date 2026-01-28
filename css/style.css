@@ -13,136 +13,22 @@ body {
   color: #eaeaea;
   overflow-x: hidden;
 
-  opacity: 0;                     /* Start invisible */
-  transition: opacity 0.5s ease;  /* Fade in timing */
+  opacity: 0;                   /* Start invisible */
+  transition: opacity 0.3s ease; /* Fade timing (in + out) */
 }
 
+/* Fade IN when page loads */
 body.loaded {
   opacity: 1;
+}
+
+/* Fade OUT before navigation */
+body.fade-out {
+  opacity: 0;
 }
 
 #starCanvas {
   position: fixed;
   inset: 0;
   z-index: -1;
-}
-
-/* ===============================
-   SIDE MENU
-   =============================== */
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 70px;                   /* collapsed width */
-  background: rgba(15,15,25,0.85);
-  backdrop-filter: blur(10px);
-  overflow: hidden;
-  transition: width 0.45s cubic-bezier(.4,0,.2,1);
-  z-index: 1000;
-}
-
-.side-menu.expanded {
-  width: 50vw;                   /* expanded width */
-}
-
-.menu-label {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  letter-spacing: 2px;
-}
-
-.menu-content {
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.3s ease, transform 0.4s ease;
-  padding-top: 40px;
-  text-align: center;
-}
-
-.side-menu.expanded .menu-content {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* ===============================
-   MENU LINKS WITH ICONS
-   =============================== */
-.menu-content a {
-  display: flex;                 /* icon + label layout */
-  align-items: center;
-  padding: 18px;
-  font-size: 20px;
-  color: #aaa;
-  text-decoration: none;
-  transition: all 0.25s;
-}
-
-.menu-content a .icon {
-  display: inline-block;
-  width: 30px;                   /* fixed width for alignment */
-  text-align: center;
-  margin-right: 10px;
-}
-
-.menu-content a .label {
-  opacity: 1;
-  transition: opacity 0.25s;
-}
-
-/* Hide labels when menu is collapsed */
-.side-menu:not(.expanded) .menu-content a .label {
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
-}
-
-.menu-content a:hover {
-  background: rgba(255,255,255,0.08);
-  color: white;
-  transform: translateX(6px);
-}
-
-.menu-content a.active {
-  color: white;
-  background: rgba(255,255,255,0.12);
-  font-weight: bold;
-}
-
-/* ===============================
-   CONTENT + SECTIONS
-   =============================== */
-.content {
-  padding: 80px 40px 40px 120px;
-}
-
-section {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  padding: 40px;
-  margin-bottom: 40px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-ul li {
-  margin-bottom: 20px;
-}
-
-/* Bottom corner text (optional) */
-.bottom-left-text {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  font-size: 18px;
-  color: rgba(255,255,255,0.3);
-  font-weight: bold;
-  pointer-events: none;
 }
