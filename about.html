@@ -2,84 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About</title>
-
-  <!-- Prefetch other pages for faster navigation -->
   <link rel="prefetch" href="index.html">
   <link rel="prefetch" href="skills.html">
   <link rel="prefetch" href="projects.html">
   <link rel="prefetch" href="experience.html">
   <link rel="prefetch" href="goals.html">
   <link rel="prefetch" href="contact.html">
-
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <canvas id="starCanvas"></canvas>
 
-<!-- Side Menu -->
 <div class="side-menu" id="sideMenu">
   <div class="menu-label">INDEX</div>
   <div class="menu-content">
-    <a href="index.html">
-      <span class="icon">🏠</span>
-      <span class="label">Home</span>
-    </a>
-    <a href="about.html" class="active">
-      <span class="icon">ℹ️</span>
-      <span class="label">About</span>
-    </a>
-    <a href="skills.html">
-      <span class="icon">💻</span>
-      <span class="label">Skills</span>
-    </a>
-    <a href="projects.html">
-      <span class="icon">📂</span>
-      <span class="label">Projects</span>
-    </a>
-    <a href="experience.html">
-      <span class="icon">🛠️</span>
-      <span class="label">Experience</span>
-    </a>
-    <a href="goals.html">
-      <span class="icon">🎯</span>
-      <span class="label">Goals</span>
-    </a>
-    <a href="contact.html">
-      <span class="icon">📞</span>
-      <span class="label">Contact</span>
-    </a>
+    <a href="index.html"><span class="icon">🏠</span><span class="label">Home</span></a>
+    <a href="about.html" class="active"><span class="icon">ℹ️</span><span class="label">About</span></a>
+    <a href="skills.html"><span class="icon">💻</span><span class="label">Skills</span></a>
+    <a href="projects.html"><span class="icon">📂</span><span class="label">Projects</span></a>
+    <a href="experience.html"><span class="icon">🛠️</span><span class="label">Experience</span></a>
+    <a href="goals.html"><span class="icon">🎯</span><span class="label">Goals</span></a>
+    <a href="contact.html"><span class="icon">📞</span><span class="label">Contact</span></a>
   </div>
 </div>
 
-<!-- Page Content -->
-<div class="content">
+<div class="main-content">
   <h1>About Me</h1>
-  <p>I’ve always learned best by building and experimenting with my own hands. Whether it’s taking apart a computer to see how it works or trying to fix something on my own, mistakes have been my favorite teachers. They show me how things really function and give me a sense of accomplishment that no test score ever could.</p>
-
-  <p>One event that sparked my personal growth was my junior year school trip to New York City and Washington, D.C., for my Teaching and Training class. Leading up to the trip, I felt like I didn’t deserve to go. My grades and past actions made it hard to fully embrace the experience. Once there, I was placed in a group of four—Noe, Taeven, and Noe’s sister. While we all got along, my social anxiety kept me mostly on the sidelines. I took photos of the group from afar, experimenting with different angles and perspectives, which gave me my own unique view of the trip.</p>
-
-  <p>We visited the National Veterans Burial Site, the White House, and the Lincoln Memorial. By the time we reached New York, everyone’s bonds had strengthened. My favorite part of the trip was walking to the top of the Empire State Building—the view was breathtaking, even better than the unfortunate food poisoning I got from a shawarma on the way home! The trip taught me that some of the most meaningful lessons come not from textbooks or lectures, but from seeing the world, connecting with others, and appreciating different perspectives.</p>
-
-  <p>In addition to my personal experiences, I’ve gained valuable work experience at Cowabunga Bay Water Park in Henderson. There, I learned how to interact with customers, work as part of a team, and handle challenges in a fast-paced environment. Whether it was ensuring safety, keeping the park running smoothly, or helping guests have a great time, this experience taught me responsibility, communication, and adaptability—skills I carry into all areas of life.</p>
-
-  <p>Overall, my experiences—whether through school trips, hands-on projects, or professional work—have shaped me into someone who values curiosity, resilience, and learning from every mistake. I try to approach life the same way I approach building something: with creativity, patience, and a willingness to experiment, knowing that even failures can lead to growth and discovery.</p>
+  <div class="content">
+    <p>I’ve always learned best by building and experimenting with my own hands...</p>
+    <!-- Your full About content here -->
+  </div>
 </div>
 
-<!-- Scripts -->
 <script src="js/menu.js"></script>
 <script src="js/stars.js"></script>
 <script src="js/scroll.js"></script>
 <script>
-  // Fade in on page load
   window.addEventListener("load", () => {
     document.body.classList.add("loaded");
   });
 </script>
 
-<!-- Hidden links for scroll navigation -->
 <a href="skills.html" class="next-page" style="display:none"></a>
 <a href="index.html" class="prev-page" style="display:none"></a>
-
 </body>
 </html>
