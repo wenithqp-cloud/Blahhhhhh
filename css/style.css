@@ -91,7 +91,7 @@ body.fade-out {
    MAIN CONTENT SHIFT WHEN MENU EXPANDS
    =============================== */
 .main-content {
-  margin-left: 50px; /* default matches collapsed menu width */
+  margin-left: 200px; /* default matches collapsed menu width */
   transition: margin-left 0.3s ease;
 }
 
