@@ -86,3 +86,15 @@ body.fade-out {
 .side-menu .menu-content a.active {
   background: #222;
 }
+
+/* ===============================
+   MAIN CONTENT SHIFT WHEN MENU EXPANDS
+   =============================== */
+.main-content {
+  margin-left: 50px; /* default matches collapsed menu width */
+  transition: margin-left 0.3s ease;
+}
+
+.side-menu.expanded ~ .main-content {
+  margin-left: 200px; /* matches expanded menu width */
+}
