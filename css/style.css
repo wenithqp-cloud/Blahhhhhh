@@ -13,7 +13,7 @@ body {
   color: #eaeaea;
   overflow-x: hidden;
 
-  opacity: 0;                   /* Start invisible */
+  opacity: 0;                    /* Start invisible */
   transition: opacity 0.3s ease; /* Fade timing (in + out) */
 }
 
@@ -31,4 +31,58 @@ body.fade-out {
   position: fixed;
   inset: 0;
   z-index: -1;
+}
+
+/* ===============================
+   SIDE MENU HOVER + TOUCH SUPPORT (RIGHT DROPDOWN)
+   =============================== */
+.side-menu {
+  position: fixed;
+  top: 50px;        /* distance from top */
+  right: 0;         /* stick to the right */
+  width: 50px;      /* collapsed width */
+  background: #111;
+  color: #fff;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+/* Label (always visible) */
+.side-menu .menu-label {
+  display: block;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Links hidden initially */
+.side-menu .menu-content {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Show links when menu is expanded */
+.side-menu.expanded {
+  width: 200px; /* expanded width */
+}
+
+.side-menu.expanded .menu-content {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Links style */
+.side-menu .menu-content a {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 10px;
+  transition: background 0.2s;
+}
+
+.side-menu .menu-content a:hover,
+.side-menu .menu-content a.active {
+  background: #222;
 }
