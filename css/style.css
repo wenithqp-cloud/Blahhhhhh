@@ -39,7 +39,7 @@ body.fade-out {
 .side-menu {
   position: fixed;
   top: 50px;        /* distance from top */
-  right: 0;         /* stick to the right */
+  left: 0;         /* stick to the right */
   width: 50px;      /* collapsed width */
   background: #111;
   color: #fff;
