@@ -1,32 +1,39 @@
 /* ===============================
    SIDE MENU HOVER + TOUCH SUPPORT
    =============================== */
-/* SIDE MENU HOVER */
-const sideMenu = document.getElementById("sideMenu");
-sideMenu.addEventListener("mouseenter", () => sideMenu.classList.add("expanded"));
-sideMenu.addEventListener("mouseleave", () => sideMenu.classList.remove("expanded"));
-
 document.addEventListener("DOMContentLoaded", () => {
   const sideMenu = document.getElementById("sideMenu");
+  if (!sideMenu) return;
 
-  if (!sideMenu) return; // Exit if menu not found
-
-  // Expand/collapse on mouse hover
-  sideMenu.addEventListener("mouseenter", () => sideMenu.classList.add("expanded"));
-  sideMenu.addEventListener("mouseleave", () => sideMenu.classList.remove("expanded"));
-
-  // Optional: toggle menu on click for touch devices
   const menuLabel = sideMenu.querySelector(".menu-label");
-  menuLabel.addEventListener("click", () => {
-    sideMenu.classList.toggle("expanded");
-  });
-
-  // Highlight active menu link based on current page
-  const currentPath = window.location.pathname.split("/").pop(); // get file name
   const links = sideMenu.querySelectorAll(".menu-content a");
 
+  /* ---------- HOVER (DESKTOP) ---------- */
+  sideMenu.addEventListener("mouseenter", () => {
+    sideMenu.classList.add("expanded");
+  });
+
+  sideMenu.addEventListener("mouseleave", () => {
+    sideMenu.classList.remove("expanded");
+  });
+
+  /* ---------- TOUCH / CLICK (MOBILE) ---------- */
+  if (menuLabel) {
+    menuLabel.addEventListener("click", (e) => {
+      e.preventDefault();
+      sideMenu.classList.toggle("expanded");
+    });
+  }
+
+  /* ---------- ACTIVE LINK HIGHLIGHT ---------- */
+  let currentPage = window.location.pathname.split("/").pop();
+
+  // Fix for GitHub Pages root (/)
+  if (currentPage === "") currentPage = "index.html";
+
   links.forEach(link => {
-    if (link.getAttribute("href") === currentPath) {
+    const href = link.getAttribute("href");
+    if (href === currentPage) {
       link.classList.add("active");
     } else {
       link.classList.remove("active");
