@@ -34,12 +34,12 @@ body.fade-out {
 }
 
 /* ===============================
-   SIDE MENU HOVER + TOUCH SUPPORT (RIGHT DROPDOWN)
+   SIDE MENU HOVER + TOUCH SUPPORT (LEFT DROPDOWN)
    =============================== */
 .side-menu {
   position: fixed;
   top: 50px;        /* distance from top */
-  left: 0;         /* stick to the right */
+  left: 0;          /* stick to the left */
   width: 50px;      /* collapsed width */
   background: #111;
   color: #fff;
