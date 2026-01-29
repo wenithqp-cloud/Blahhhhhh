@@ -136,3 +136,24 @@ body.fade-out {
   font-size: 18px;
   line-height: 1.5;
 }
+.main-content {
+  margin-left: 60px; /* space for the collapsed menu */
+  padding: 40px 20px; /* top/bottom 40px, left/right 20px */
+  transition: margin-left 0.3s ease;
+}
+.main-content p {
+  margin-bottom: 20px;  /* space between paragraphs */
+  line-height: 1.6;     /* vertical spacing inside paragraphs */
+}
+.main-content ul {
+  margin-bottom: 20px;  /* space after the list */
+  padding-left: 20px;   /* indent list items */
+}
+
+.main-content li {
+  margin-bottom: 10px;  /* space between list items */
+  line-height: 1.5;
+}
+.main-content .content {
+  max-width: 800px; /* prevents text from stretching too wide */
+}
