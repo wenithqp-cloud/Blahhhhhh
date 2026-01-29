@@ -4,7 +4,6 @@ const ctx = canvas.getContext("2d");
 let stars = [];
 const STAR_COUNT = 120;
 
-// Resize canvas
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -12,7 +11,6 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-// Star class
 class Star {
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -42,18 +40,15 @@ class Star {
   }
 }
 
-// Init stars
 for (let i = 0; i < STAR_COUNT; i++) {
   stars.push(new Star());
 }
 
-// Animate
 function animate() {
-  ctx.fillStyle = "rgba(11,15,26,0.6)"; // background fade
+  ctx.fillStyle = "rgba(11,15,26,0.6)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   stars.forEach(star => star.update());
-
   requestAnimationFrame(animate);
 }
 
