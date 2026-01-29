@@ -4,23 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About</title>
-
-  <!-- Prefetch other pages -->
   <link rel="prefetch" href="index.html">
   <link rel="prefetch" href="skills.html">
   <link rel="prefetch" href="projects.html">
   <link rel="prefetch" href="experience.html">
   <link rel="prefetch" href="goals.html">
   <link rel="prefetch" href="contact.html">
-
-  <!-- Main CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- STAR BACKGROUND -->
   <canvas id="starCanvas"></canvas>
 
-  <!-- SIDE MENU -->
   <div class="side-menu" id="sideMenu">
     <div class="menu-label">INDEX</div>
     <div class="menu-content">
@@ -34,26 +28,20 @@
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
   <div class="main-content">
     <h1>About Me</h1>
-    <div class="content">
-      <p>I’ve always learned best by building and experimenting with my own hands. Each project, mistake, and success has taught me patience, problem-solving, and creativity. I love taking ideas from concept to reality and learning through doing.</p>
-      <!-- Add more About content here -->
-    </div>
+    <p>I’ve always learned best by building and experimenting with my own hands...</p>
   </div>
 
-  <!-- Scripts -->
+  <div class="footer">Adrian Zamora © 2026</div>
+
   <script src="js/menu.js"></script>
   <script src="js/stars.js"></script>
   <script src="js/scroll.js"></script>
   <script>
-    window.addEventListener("load", () => {
-      document.body.classList.add("loaded");
-    });
+    window.addEventListener("load", () => document.body.classList.add("loaded"));
   </script>
 
-  <!-- Hidden links for arrow navigation -->
   <a href="skills.html" class="next-page" style="display:none"></a>
   <a href="index.html" class="prev-page" style="display:none"></a>
 </body>
