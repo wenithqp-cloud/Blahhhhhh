@@ -1,5 +1,5 @@
 /* ===============================
-   GLOBAL RESET
+   GLOBAL RESET + BODY
    =============================== */
 html, body {
   margin: 0;
@@ -33,7 +33,7 @@ body.fade-out {
   position: fixed;
   inset: 0;
   z-index: -10;        /* behind everything */
-  pointer-events: none; /* won't block clicks */
+  pointer-events: none; /* don’t block clicks */
 }
 
 /* ===============================
@@ -43,7 +43,7 @@ body.fade-out {
   position: fixed;
   top: 0;
   left: 0;
-  width: 70px;             /* collapsed width */
+  width: 70px;            /* collapsed width */
   height: 100vh;
   background: #111;
   color: #fff;
@@ -54,7 +54,7 @@ body.fade-out {
 
 .side-menu:hover,
 .side-menu.locked {
-  width: 200px;            /* expanded width */
+  width: 200px;           /* expanded width */
 }
 
 .menu-label {
@@ -65,12 +65,14 @@ body.fade-out {
   color: #fff;
 }
 
+/* menu content container */
 .menu-content {
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
+/* individual links */
 .side-menu a {
   display: flex;
   align-items: center;
@@ -81,24 +83,29 @@ body.fade-out {
   overflow: visible;
 }
 
+/* the emoji/icon inside link */
 .side-menu a .icon {
-  width: 40px;
+  width: 40px;           /* reserve enough space for emoji */
   text-align: center;
   display: inline-block;
   font-size: 20px;
 }
 
+/* the text label inside link */
 .side-menu a .label {
-  opacity: 0;
+  opacity: 0;             /* hidden when collapsed */
   margin-left: 10px;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, margin 0.3s ease;
 }
 
+/* show text when expanded */
 .side-menu:hover a .label,
 .side-menu.locked a .label {
   opacity: 1;
+  margin-left: 10px;
 }
 
+/* hover/active links */
 .side-menu a:hover,
 .side-menu a.active {
   background: #222;
@@ -108,8 +115,15 @@ body.fade-out {
    MAIN CONTENT
    =============================== */
 .main-content {
-  margin-left: 70px;       /* 🔹 match the new collapsed sidebar width */
+  margin-left: 70px;       /* match collapsed sidebar width */
   padding: 20px;
   position: relative;
-  z-index: 1;              /* above background */
+  z-index: 1;              /* above canvas */
+  transition: margin-left 0.3s ease;
+}
+
+/* shift main content when sidebar is hovered/locked */
+.side-menu:hover ~ .main-content,
+.side-menu.locked ~ .main-content {
+  margin-left: 200px;     /* match expanded sidebar width */
 }
