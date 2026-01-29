@@ -1,43 +1,5 @@
 /* ===============================
-   GLOBAL RESET
-   =============================== */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #0b0f1a;
-  color: #eaeaea;
-  overflow-x: hidden;
-
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-body.loaded {
-  opacity: 1;
-}
-
-body.fade-out {
-  opacity: 0;
-}
-
-/* ===============================
-   STAR BACKGROUND (FIXED)
-   =============================== */
-#starCanvas {
-  position: fixed;
-  inset: 0;
-  z-index: -10;          /* 🔑 FORCE behind everything */
-  pointer-events: none; /* 🔑 never block clicks */
-}
-
-/* ===============================
-   SIDE MENU (VISIBLE + WORKING)
+   SIDE MENU (HOVER + CLICK)
    =============================== */
 .side-menu {
   position: fixed;
@@ -48,7 +10,6 @@ body.fade-out {
   background: #111;
   color: #fff;
   z-index: 1000;
-
   overflow: hidden;
   transition: width 0.3s ease;
 }
@@ -68,37 +29,44 @@ body.fade-out {
   color: #fff;
 }
 
-/* Menu content */
+/* Menu content container */
 .menu-content {
-  opacity: 0;
-  transition: opacity 0.2s ease 0.1s;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Reveal links */
-.side-menu:hover .menu-content,
-.side-menu.locked .menu-content {
-  opacity: 1;
-}
-
-/* Links */
+/* Individual link */
 .side-menu a {
+  display: flex;
+  align-items: center;
   padding: 10px 14px;
   color: #fff;
   text-decoration: none;
-  display: block;
+  white-space: nowrap;
 }
 
+/* The icon inside each link */
+.side-menu a .icon {
+  min-width: 24px;         /* Reserve space for icon */
+  margin-right: 0;          /* Start with no spacing when collapsed */
+  transition: margin 0.3s ease;
+}
+
+/* The text label inside each link */
+.side-menu a .label {
+  opacity: 0;               /* Hidden when collapsed */
+  margin-left: 10px;
+  transition: opacity 0.2s ease;
+}
+
+/* Show text when menu expanded or hovered */
+.side-menu:hover a .label,
+.side-menu.locked a .label {
+  opacity: 1;
+}
+
+/* Hover / active link styling */
 .side-menu a:hover,
 .side-menu a.active {
   background: #222;
-}
-
-/* ===============================
-   MAIN CONTENT
-   =============================== */
-.main-content {
-  margin-left: 50px;
-  padding: 20px;
-  position: relative;
-  z-index: 1; /* 🔑 always above background */
 }
