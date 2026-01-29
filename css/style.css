@@ -1,26 +1,62 @@
 /* ===============================
-   SIDE MENU (HOVER + CLICK)
+   GLOBAL RESET
+   =============================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #eaeaea;
+  overflow-x: hidden;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+body.fade-out {
+  opacity: 0;
+}
+
+/* ===============================
+   STAR BACKGROUND
+   =============================== */
+#starCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;        /* behind everything */
+  pointer-events: none; /* won't block clicks */
+}
+
+/* ===============================
+   SIDE MENU
    =============================== */
 .side-menu {
   position: fixed;
   top: 0;
   left: 0;
-  width: 70px; /* 🔹 make the collapsed menu bigger */
+  width: 70px;             /* collapsed width */
   height: 100vh;
   background: #111;
   color: #fff;
   z-index: 1000;
-  overflow: visible; /* 🔹 allow icons to be seen */
+  overflow: visible;       /* allow icons */
   transition: width 0.3s ease;
 }
 
-/* Hover OR locked open */
 .side-menu:hover,
 .side-menu.locked {
-  width: 200px; /* expanded width */
+  width: 200px;            /* expanded width */
 }
 
-/* Label always visible */
 .menu-label {
   padding: 14px;
   cursor: pointer;
@@ -29,14 +65,12 @@
   color: #fff;
 }
 
-/* Menu content container */
 .menu-content {
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-/* Individual link */
 .side-menu a {
   display: flex;
   align-items: center;
@@ -44,32 +78,38 @@
   color: #fff;
   text-decoration: none;
   white-space: nowrap;
-  overflow: visible; /* 🔹 show emojis */
+  overflow: visible;
 }
 
-/* The emoji/icon inside each link */
 .side-menu a .icon {
-  width: 40px;           /* reserve enough space for emoji */
+  width: 40px;
   text-align: center;
   display: inline-block;
-  font-size: 20px;       /* make emojis a bit bigger if you want */
+  font-size: 20px;
 }
 
-/* The text label inside each link */
 .side-menu a .label {
-  opacity: 0;             /* hidden when collapsed */
+  opacity: 0;
   margin-left: 10px;
   transition: opacity 0.2s ease;
 }
 
-/* Show text when menu expanded or hovered */
 .side-menu:hover a .label,
 .side-menu.locked a .label {
   opacity: 1;
 }
 
-/* Hover / active link styling */
 .side-menu a:hover,
 .side-menu a.active {
   background: #222;
+}
+
+/* ===============================
+   MAIN CONTENT
+   =============================== */
+.main-content {
+  margin-left: 70px;       /* 🔹 match the new collapsed sidebar width */
+  padding: 20px;
+  position: relative;
+  z-index: 1;              /* above background */
 }
