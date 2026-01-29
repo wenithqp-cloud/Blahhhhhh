@@ -3,8 +3,8 @@ const ctx = canvas.getContext("2d");
 
 let stars = [];
 let bigStars = [];
-const STAR_COUNT = 120;
-const BIG_STAR_COUNT = 5;
+const STAR_COUNT = 200;
+const BIG_STAR_COUNT = 15;
 let mouse = { x: null, y: null };
 
 function resizeCanvas() {
@@ -73,7 +73,10 @@ function drawLines() {
   if (!mouse.x || !mouse.y) return;
   const allStars = stars.concat(bigStars);
   allStars.sort((a, b) => ((a.x - mouse.x)**2 + (a.y - mouse.y)**2) - ((b.x - mouse.x)**2 + (b.y - mouse.y)**2));
-  for (let i = 0; i < 15 && i < allStars.length; i++) {
+  
+  const maxConnections = 20; // <-- changed from 15 to 20
+
+  for (let i = 0; i < maxConnections && i < allStars.length; i++) {
     const s = allStars[i];
     ctx.beginPath();
     ctx.moveTo(s.x, s.y);
@@ -83,6 +86,7 @@ function drawLines() {
     ctx.stroke();
   }
 }
+
 
 function animate() {
   ctx.fillStyle = "rgba(11,15,26,0.6)";
