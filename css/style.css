@@ -13,7 +13,6 @@ body {
   background: #0b0f1a;
   color: #eaeaea;
   overflow-x: hidden;
-
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -32,8 +31,8 @@ body.fade-out {
 #starCanvas {
   position: fixed;
   inset: 0;
-  z-index: -10;        /* behind everything */
-  pointer-events: none; /* don’t block clicks */
+  z-index: -10;       /* behind everything */
+  pointer-events: none;
 }
 
 /* ===============================
@@ -43,18 +42,18 @@ body.fade-out {
   position: fixed;
   top: 0;
   left: 0;
-  width: 70px;            /* collapsed width */
+  width: 70px;           /* collapsed width */
   height: 100vh;
   background: #111;
   color: #fff;
   z-index: 1000;
-  overflow: visible;       /* allow icons */
+  overflow: visible;
   transition: width 0.3s ease;
 }
 
 .side-menu:hover,
 .side-menu.locked {
-  width: 200px;           /* expanded width */
+  width: 200px;          /* expanded width */
 }
 
 .menu-label {
@@ -85,7 +84,7 @@ body.fade-out {
 
 /* the emoji/icon inside link */
 .side-menu a .icon {
-  width: 40px;           /* reserve enough space for emoji */
+  width: 40px;
   text-align: center;
   display: inline-block;
   font-size: 20px;
