@@ -33,6 +33,12 @@ body.fade-out {
 /* ===============================
    SIDE MENU (LEFT SLIDING)
    =============================== */
+const menu = document.getElementById("sideMenu");
+const label = menu.querySelector(".menu-label");  /* this should expand the menu */
+label.addEventListener("click", () => {
+  menu.classList.toggle("expanded");
+});
+
 .side-menu {
   position: fixed;
   top: 50px;
