@@ -1,176 +1,76 @@
 /* ===============================
-   GLOBAL SETTINGS + FADE SYSTEM
-   =============================== */
-* {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #0b0f1a;
-  color: #eaeaea;
-  overflow-x: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-body.loaded {
-  opacity: 1;
-}
-
-body.fade-out {
-  opacity: 0;
-}
-
-/* ===============================
-   STAR CANVAS
-   =============================== */
-#starCanvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-}
-
-/* ===============================
    SIDE MENU (HOVER + CLICK)
    =============================== */
 .side-menu {
   position: fixed;
-  top: 0;
+  top: 50px;
   left: 0;
-  width: 70px; /* default collapsed width */
-  height: 100%;
+  width: 60px; /* slightly bigger so icons have room */
+  height: calc(100% - 50px);
   background: #111;
   color: #fff;
   z-index: 1000;
+
   overflow: hidden;
   transition: width 0.3s ease;
-}
-
-.side-menu:hover,
-.side-menu.locked {
-  width: 200px;
-}
-
-.menu-label {
-  padding: 15px;
-  cursor: pointer;
-  white-space: nowrap;
-  font-weight: bold;
-  border-bottom: 1px solid #222;
-}
-
-.menu-content {
-  opacity: 0;
-  transition: opacity 0.2s ease 0.1s;
   display: flex;
   flex-direction: column;
 }
 
-.side-menu:hover .menu-content,
-.side-menu.locked .menu-content {
-  opacity: 1;
+/* Hover OR locked open */
+.side-menu:hover,
+.side-menu.locked {
+  width: 200px; /* menu expands to show labels */
 }
 
+/* Label always visible */
+.menu-label {
+  padding: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Menu content container */
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+/* Links */
 .side-menu a {
-  padding: 12px 15px;
-  color: #fff;
-  text-decoration: none;
   display: flex;
   align-items: center;
+  padding: 10px 12px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s;
 }
 
+/* Hover background */
 .side-menu a:hover,
 .side-menu a.active {
   background: #222;
 }
 
+/* Icon (always visible) */
 .side-menu .icon {
-  margin-right: 8px;
-  font-size: 20px;
-}
-
-/* Icons always visible even when menu collapsed */
-.side-menu a .icon {
-  min-width: 30px;
+  font-size: 24px;
+  margin-right: 0;
+  min-width: 30px; /* always space for emoji */
   text-align: center;
 }
 
-/* ===============================
-   MAIN CONTENT
-   =============================== */
-.main-content {
-  margin-left: 70px; /* leave space for sidebar */
-  padding: 20px;
-  transition: margin-left 0.3s ease;
+/* Label (hidden when collapsed) */
+.side-menu .label {
+  margin-left: 10px;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
 }
 
-.side-menu:hover ~ .main-content,
-.side-menu.locked ~ .main-content {
-  margin-left: 200px;
-}
-
-.main-content h1 {
-  margin-bottom: 15px;
-}
-
-.main-content .content {
-  max-width: 800px;
-  line-height: 1.6;
-}
-
-/* ===============================
-   FOOTER
-   =============================== */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 70px;
-  width: calc(100% - 70px);
-  padding: 10px 20px;
-  text-align: left;
-  font-size: 14px;
-  color: #aaa;
-  transition: left 0.3s ease, width 0.3s ease;
-}
-
-.side-menu:hover ~ .footer,
-.side-menu.locked ~ .footer {
-  left: 200px;
-  width: calc(100% - 200px);
-}
-
-/* ===============================
-   LINKS & TEXT
-   =============================== */
-a {
-  color: #eaeaea;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* ===============================
-   RESPONSIVE
-   =============================== */
-@media (max-width: 600px) {
-  .main-content {
-    margin-left: 50px;
-  }
-  .footer {
-    left: 50px;
-    width: calc(100% - 50px);
-  }
-  .side-menu {
-    width: 50px;
-  }
-  .side-menu:hover,
-  .side-menu.locked {
-    width: 150px;
-  }
+/* Show labels when menu expands */
+.side-menu:hover .label,
+.side-menu.locked .label {
+  opacity: 1;
 }
