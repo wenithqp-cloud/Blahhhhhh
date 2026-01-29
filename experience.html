@@ -4,16 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience</title>
+
+  <!-- Prefetch pages -->
   <link rel="prefetch" href="index.html">
   <link rel="prefetch" href="about.html">
   <link rel="prefetch" href="skills.html">
   <link rel="prefetch" href="projects.html">
   <link rel="prefetch" href="goals.html">
   <link rel="prefetch" href="contact.html">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+  <!-- Star background -->
   <canvas id="starCanvas"></canvas>
+
+  <!-- Side Menu -->
   <div class="side-menu" id="sideMenu">
     <div class="menu-label">INDEX</div>
     <div class="menu-content">
@@ -27,24 +35,33 @@
     </div>
   </div>
 
-  <div class="main-content">
+  <!-- Main Content -->
+  <main class="main-content">
     <h1>My Experiences</h1>
     <p><strong>Learning Through Hands-On Projects:</strong> I’ve learned that the best way for me to understand something is by building it myself...</p>
     <p><strong>School Trip to New York and Washington, D.C.:</strong> This trip taught me personal growth and the value of observation...</p>
     <p><strong>Professional Experience at Cowabunga Bay Water Park:</strong> Working at Cowabunga Bay taught me real-world skills...</p>
     <p><strong>Overall Lessons:</strong> From personal projects, school trips, and work experiences, I’ve learned the value of curiosity, persistence, and collaboration.</p>
-  </div>
+  </main>
 
-  <div class="footer">Adrian Zamora © 2026</div>
+  <!-- Footer -->
+  <footer class="footer">
+    Adrian Zamora © 2026
+  </footer>
 
-  <script src="js/menu.js"></script>
-  <script src="js/stars.js"></script>
-  <script src="js/scroll.js"></script>
-  <script>
-    window.addEventListener("load", () => document.body.classList.add("loaded"));
+  <!-- Hidden navigation (keyboard scrolling) -->
+  <a href="goals.html" class="next-page" hidden></a>
+  <a href="projects.html" class="prev-page" hidden></a>
+
+  <!-- Scripts -->
+  <script src="js/menu.js" defer></script>
+  <script src="js/stars.js" defer></script>
+  <script src="js/scroll.js" defer></script>
+
+  <script defer>
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
   </script>
-
-  <a href="goals.html" class="next-page" style="display:none"></a>
-  <a href="projects.html" class="prev-page" style="display:none"></a>
 </body>
 </html>
