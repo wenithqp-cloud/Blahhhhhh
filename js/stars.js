@@ -7,6 +7,7 @@ const STAR_COUNT = 200;
 const BIG_STAR_COUNT = 15;
 let mouse = { x: null, y: null };
 
+// Resize canvas
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -14,6 +15,9 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
+// ===============================
+// STAR CLASSES
+// ===============================
 class Star {
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -27,17 +31,21 @@ class Star {
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = this.isBig ? "rgba(255,255,200,0.9)" : "rgba(255,255,255,0.8)";
+    ctx.fillStyle = this.isBig
+      ? "rgba(255,255,200,0.9)"
+      : "rgba(255,255,255,0.8)";
     ctx.fill();
   }
 
   update() {
     this.x += this.vx;
     this.y += this.vy;
+
     if (this.x < 0) this.x = canvas.width;
     if (this.x > canvas.width) this.x = 0;
     if (this.y < 0) this.y = canvas.height;
     if (this.y > canvas.height) this.y = 0;
+
     this.draw();
   }
 }
@@ -48,6 +56,7 @@ class BigStar extends Star {
     this.radius = Math.random() * 3 + 2;
     this.isBig = true;
   }
+
   explode() {
     let particles = [];
     for (let i = 0; i < 10; i++) {
@@ -64,17 +73,28 @@ class BigStar extends Star {
   }
 }
 
+// ===============================
+// INIT STARS
+// ===============================
 for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
 for (let i = 0; i < BIG_STAR_COUNT; i++) bigStars.push(new BigStar());
 
 let particles = [];
 
+// ===============================
+// CURSOR → STAR LINES
+// ===============================
 function drawLines() {
   if (!mouse.x || !mouse.y) return;
+
   const allStars = stars.concat(bigStars);
-  allStars.sort((a, b) => ((a.x - mouse.x)**2 + (a.y - mouse.y)**2) - ((b.x - mouse.x)**2 + (b.y - mouse.y)**2));
-  
-  const maxConnections = 20; // <-- changed from 15 to 20
+  allStars.sort(
+    (a, b) =>
+      (a.x - mouse.x) ** 2 + (a.y - mouse.y) ** 2 -
+      ((b.x - mouse.x) ** 2 + (b.y - mouse.y) ** 2)
+  );
+
+  const maxConnections = 20;
 
   for (let i = 0; i < maxConnections && i < allStars.length; i++) {
     const s = allStars[i];
@@ -87,30 +107,76 @@ function drawLines() {
   }
 }
 
+// ===============================
+// STAR → STAR CONNECTIONS
+// ===============================
+function drawStarConnections() {
+  const allStars = stars.concat(bigStars);
+  const connectionCount = new Map();
+  allStars.forEach(s => connectionCount.set(s, 0));
 
+  for (let i = 0; i < allStars.length; i += 2) {
+    const s = allStars[i];
+    if (connectionCount.get(s) >= 2) continue;
+
+    const closest = allStars
+      .filter(o => o !== s)
+      .sort(
+        (a, b) =>
+          Math.hypot(a.x - s.x, a.y - s.y) -
+          Math.hypot(b.x - s.x, b.y - s.y)
+      );
+
+    let connections = 0;
+
+    for (let other of closest) {
+      if (connections >= 2) break;
+      if (connectionCount.get(other) >= 2) continue;
+
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(other.x, other.y);
+      ctx.strokeStyle = "rgba(255,255,255,0.07)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      connectionCount.set(s, connectionCount.get(s) + 1);
+      connectionCount.set(other, connectionCount.get(other) + 1);
+      connections++;
+    }
+  }
+}
+
+// ===============================
+// ANIMATION LOOP
+// ===============================
 function animate() {
   ctx.fillStyle = "rgba(11,15,26,0.6)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   stars.forEach(s => s.update());
   bigStars.forEach(b => b.update());
-  drawLines();
+
+  drawLines();           // cursor connections
+  drawStarConnections(); // star network
 
   particles.forEach((p, idx) => {
     p.x += p.vx;
     p.y += p.vy;
     p.life--;
+
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(255,255,150,0.8)";
     ctx.fill();
-    if(p.life <= 0) particles.splice(idx,1);
+
+    if (p.life <= 0) particles.splice(idx, 1);
   });
 
   stars.forEach(s => {
     bigStars.forEach(b => {
       const dist = Math.hypot(s.x - b.x, s.y - b.y);
-      if(dist < s.radius + b.radius){
+      if (dist < s.radius + b.radius) {
         particles.push(...b.explode());
         b.x = Math.random() * canvas.width;
         b.y = Math.random() * canvas.height;
@@ -121,6 +187,9 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
+// ===============================
+// MOUSE TRACKING
+// ===============================
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
