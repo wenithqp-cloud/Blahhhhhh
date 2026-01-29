@@ -66,6 +66,18 @@ body.fade-out {
 .side-menu.expanded .menu-content {
   transform: translateX(0);
 }
+.side-menu {
+  width: 50px;
+}
+
+.side-menu.expanded {
+  width: 200px;
+  transition: width 0.3s ease;
+}
+
+.side-menu .menu-content {
+  transform: translateX(0);
+}
 
 /* Links style */
 .side-menu .menu-content a {
