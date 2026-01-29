@@ -110,8 +110,8 @@ body.fade-out {
    MAIN CONTENT
    =============================== */
 .main-content {
-  margin-left: 60px; /* space for collapsed menu */
-  padding: 40px 20px; /* spacing around content */
+  margin-left: 80px; /* space for collapsed menu */
+  padding: 70px 30px; /* spacing around content */
   transition: margin-left 0.3s ease;
 }
 
