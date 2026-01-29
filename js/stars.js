@@ -8,11 +8,12 @@ let particles = [];
 const STAR_COUNT = 200;
 const BIG_STAR_COUNT = 15;
 const MAX_STARS = 600;
+const MAX_CONNECTIONS = 2; // each star connects to 2 others max
 
 let mouse = { x: null, y: null };
 
 // ===============================
-// RESIZE
+// RESIZE CANVAS
 // ===============================
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -37,9 +38,7 @@ class Star {
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = this.isBig
-      ? "rgba(255,255,200,0.9)"
-      : "rgba(255,255,255,0.8)";
+    ctx.fillStyle = this.isBig ? "rgba(255,255,200,0.9)" : "rgba(255,255,255,0.8)";
     ctx.fill();
   }
 
@@ -97,15 +96,15 @@ class BigStar extends Star {
 }
 
 // ===============================
-// INIT
+// INIT STARS
 // ===============================
 for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
 for (let i = 0; i < BIG_STAR_COUNT; i++) bigStars.push(new BigStar());
 
 // ===============================
-// CURSOR LINES
+// CURSOR CONNECTIONS
 // ===============================
-function drawLines() {
+function drawCursorLines() {
   if (!mouse.x || !mouse.y) return;
 
   const allStars = stars.concat(bigStars);
@@ -115,46 +114,66 @@ function drawLines() {
       ((b.x - mouse.x) ** 2 + (b.y - mouse.y) ** 2)
   );
 
-  for (let i = 0; i < 20 && i < allStars.length; i++) {
+  const maxConnections = Math.min(20, allStars.length);
+
+  for (let i = 0; i < maxConnections; i++) {
     const s = allStars[i];
     ctx.beginPath();
     ctx.moveTo(s.x, s.y);
     ctx.lineTo(mouse.x, mouse.y);
     ctx.strokeStyle = "rgba(255,255,255,0.1)";
+    ctx.lineWidth = 1;
     ctx.stroke();
   }
 }
 
 // ===============================
-// STAR NETWORK
+// STAR → STAR CONNECTIONS (max 2 each)
 // ===============================
 function drawStarConnections() {
   const allStars = stars.concat(bigStars);
+  const connections = new Map();
 
-  for (let i = 0; i < allStars.length; i += 2) {
-    const s = allStars[i];
-    const other = allStars[i + 1];
-    if (!other) continue;
+  allStars.forEach(s => connections.set(s, 0));
 
-    ctx.beginPath();
-    ctx.moveTo(s.x, s.y);
-    ctx.lineTo(other.x, other.y);
-    ctx.strokeStyle = "rgba(255,255,255,0.07)";
-    ctx.stroke();
+  for (let s of allStars) {
+    if (connections.get(s) >= MAX_CONNECTIONS) continue;
+
+    // Find closest stars that still have < MAX_CONNECTIONS
+    const closest = allStars
+      .filter(o => o !== s && connections.get(o) < MAX_CONNECTIONS)
+      .sort((a, b) => Math.hypot(a.x - s.x, a.y - s.y) - Math.hypot(b.x - s.x, b.y - s.y));
+
+    let count = 0;
+    for (let other of closest) {
+      if (count >= MAX_CONNECTIONS) break;
+
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(other.x, other.y);
+      ctx.strokeStyle = "rgba(255,255,255,0.07)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      connections.set(s, connections.get(s) + 1);
+      connections.set(other, connections.get(other) + 1);
+      count++;
+    }
   }
 }
 
 // ===============================
-// ANIMATE
+// ANIMATION LOOP
 // ===============================
 function animate() {
+  // Clear with semi-transparent bg for trails
   ctx.fillStyle = "rgba(11,15,26,0.6)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   stars.forEach(s => s.update());
   bigStars.forEach(b => b.update());
 
-  drawLines();
+  drawCursorLines();
   drawStarConnections();
 
   // Particles
@@ -171,11 +190,11 @@ function animate() {
     if (p.life <= 0) particles.splice(i, 1);
   });
 
-  // Collisions → explosions
+  // Big star collisions → explosions
   stars.forEach(s => {
     bigStars.forEach(b => {
-      const d = Math.hypot(s.x - b.x, s.y - b.y);
-      if (d < s.radius + b.radius) {
+      const dist = Math.hypot(s.x - b.x, s.y - b.y);
+      if (dist < s.radius + b.radius) {
         particles.push(...b.explode());
         b.x = Math.random() * canvas.width;
         b.y = Math.random() * canvas.height;
@@ -183,7 +202,7 @@ function animate() {
     });
   });
 
-  // Star cap (prevents lag)
+  // Star cap
   if (stars.length > MAX_STARS) {
     stars.splice(0, stars.length - MAX_STARS);
   }
@@ -192,7 +211,7 @@ function animate() {
 }
 
 // ===============================
-// MOUSE
+// MOUSE TRACKING
 // ===============================
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
