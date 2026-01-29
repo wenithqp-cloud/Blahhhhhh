@@ -36,9 +36,9 @@ body.fade-out {
    =============================== */
 .side-menu {
   position: fixed;
-  top: 50px;
+  top: 0px;
   left: 0;
-  width: 60px; /* collapsed width for emojis */
+  width: 70px; /* collapsed width for emojis */
   height: calc(100% - 50px);
   background: #111;
   color: #fff;
@@ -126,7 +126,7 @@ body.fade-out {
   bottom: 10px;
   left: 0;
   width: 100%;
-  text-align: center;
+  text-align: right;
   color: #aaa;
   font-size: 14px;
 }
