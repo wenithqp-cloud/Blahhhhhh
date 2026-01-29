@@ -3,29 +3,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevPage = document.querySelector(".prev-page");
   let navigating = false;
 
-  function atTop() { return window.scrollY <= 0; }
-  function atBottom() { return window.innerHeight + window.scrollY >= document.body.scrollHeight - 2; }
-
   window.addEventListener("keydown", (e) => {
     if (navigating) return;
 
-    const tag = document.activeElement.tagName;
+    const tag = document.activeElement.tagName.toUpperCase();
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
 
-    // NEXT PAGE
-    if ((e.key === "ArrowRight" || e.key.toLowerCase() === "d") || (e.key === "ArrowDown" && atBottom())) {
+    const key = e.key.toLowerCase();
+
+    // NEXT PAGE: ArrowRight, 'D', ArrowDown
+    if (key === "arrowright" || key === "d" || key === "arrowdown") {
       if (!nextPage) return;
       navigating = true;
       document.body.classList.add("fade-out");
-      setTimeout(() => { window.location.href = nextPage.href; }, 300);
+      setTimeout(() => {
+        if (nextPage.href) window.location.href = nextPage.href;
+        else navigating = false;
+      }, 300);
     }
 
-    // PREVIOUS PAGE
-    if ((e.key === "ArrowLeft" || e.key.toLowerCase() === "a") || (e.key === "ArrowUp" && atTop())) {
+    // PREVIOUS PAGE: ArrowLeft, 'A', ArrowUp
+    if (key === "arrowleft" || key === "a" || key === "arrowup") {
       if (!prevPage) return;
       navigating = true;
       document.body.classList.add("fade-out");
-      setTimeout(() => { window.location.href = prevPage.href; }, 300);
+      setTimeout(() => {
+        if (prevPage.href) window.location.href = prevPage.href;
+        else navigating = false;
+      }, 300);
     }
   });
 });
