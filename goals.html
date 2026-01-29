@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Goals</title>
 
-  <!-- Prefetch other pages for faster navigation -->
   <link rel="prefetch" href="index.html">
   <link rel="prefetch" href="about.html">
   <link rel="prefetch" href="skills.html">
@@ -14,65 +14,37 @@
 
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-<canvas id="starCanvas"></canvas>
+  <canvas id="starCanvas"></canvas>
 
-<!-- Side Menu -->
-<div class="side-menu" id="sideMenu">
-  <div class="menu-label">INDEX</div>
-  <div class="menu-content">
-    <a href="index.html">
-      <span class="icon">🏠</span>
-      <span class="label">Home</span>
-    </a>
-    <a href="about.html">
-      <span class="icon">ℹ️</span>
-      <span class="label">About</span>
-    </a>
-    <a href="skills.html">
-      <span class="icon">💻</span>
-      <span class="label">Skills</span>
-    </a>
-    <a href="projects.html">
-      <span class="icon">📂</span>
-      <span class="label">Projects</span>
-    </a>
-    <a href="experience.html">
-      <span class="icon">🛠️</span>
-      <span class="label">Experience</span>
-    </a>
-    <a href="goals.html" class="active">
-      <span class="icon">🎯</span>
-      <span class="label">Goals</span>
-    </a>
-    <a href="contact.html">
-      <span class="icon">📞</span>
-      <span class="label">Contact</span>
-    </a>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-label">INDEX</div>
+    <div class="menu-content">
+      <a href="index.html"><span class="icon">🏠</span><span class="label">Home</span></a>
+      <a href="about.html"><span class="icon">ℹ️</span><span class="label">About</span></a>
+      <a href="skills.html"><span class="icon">💻</span><span class="label">Skills</span></a>
+      <a href="projects.html"><span class="icon">📂</span><span class="label">Projects</span></a>
+      <a href="experience.html"><span class="icon">🛠️</span><span class="label">Experience</span></a>
+      <a href="goals.html" class="active"><span class="icon">🎯</span><span class="label">Goals</span></a>
+      <a href="contact.html"><span class="icon">📞</span><span class="label">Contact</span></a>
+    </div>
   </div>
-</div>
 
-<!-- Page Content -->
-<div class="content">
-  <h1>My Goals</h1>
-  <p>to do sum fire shi</p>
-</div>
+  <div class="main-content">
+    <h1>My Goals</h1>
+    <p>To do some fire projects and continue learning new skills every day.</p>
+  </div>
 
-<!-- Scripts -->
-<script src="js/menu.js"></script>
-<script src="js/stars.js"></script>
-<script src="js/scroll.js"></script>
-<script>
-  // Fade in on page load
-  window.addEventListener("load", () => {
-    document.body.classList.add("loaded");
-  });
-</script>
+  <script src="js/menu.js"></script>
+  <script src="js/stars.js"></script>
+  <script src="js/scroll.js"></script>
+  <script>
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
+  </script>
 
-<!-- Hidden links for scroll navigation -->
-<a href="contact.html" class="next-page" style="display:none"></a>
-<a href="experience.html" class="prev-page" style="display:none"></a>
-
+  <a href="contact.html" class="next-page" style="display:none"></a>
+  <a href="experience.html" class="prev-page" style="display:none"></a>
 </body>
 </html>
