@@ -1,108 +1,53 @@
 /* ===============================
-   GLOBAL SETTINGS + FADE SYSTEM
-   =============================== */
-* {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0f1a;
-  color: #eaeaea;
-  overflow-x: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-body.loaded {
-  opacity: 1;
-}
-
-body.fade-out {
-  opacity: 0;
-}
-
-#starCanvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-}
-
-/* ===============================
-   SIDE MENU (LEFT SLIDING)
+   SIDE MENU (HOVER + CLICK)
    =============================== */
 .side-menu {
   position: fixed;
   top: 50px;
   left: 0;
-  width: 50px;           /* sidebar width stays fixed */
+  width: 50px;
   height: calc(100% - 50px);
   background: #111;
   color: #fff;
-  overflow: hidden;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-}
 
-/* Always visible label */
-.side-menu .menu-label {
-  display: block;
-  padding: 10px;
-  cursor: pointer;
-}
-
-/* Menu links hidden by default (slide in) */
-.side-menu .menu-content {
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-100%); /* slide left outside of view */
-  transition: transform 0.3s ease;
-}
-
-/* Slide in when menu is expanded */
-.side-menu.expanded .menu-content {
-  transform: translateX(0);
-}
-.side-menu {
-  width: 50px;
-}
-
-.side-menu.expanded {
-  width: 200px;
+  overflow: hidden;
   transition: width 0.3s ease;
 }
 
-.side-menu .menu-content {
-  transform: translateX(0);
+/* Hover OR locked open */
+.side-menu:hover,
+.side-menu.locked {
+  width: 200px;
 }
 
-/* Links style */
-.side-menu .menu-content a {
-  display: flex;
-  align-items: center;
+/* Label always visible */
+.menu-label {
+  padding: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Menu content */
+.menu-content {
+  opacity: 0;
+  transition: opacity 0.2s ease 0.1s;
+}
+
+/* Reveal links */
+.side-menu:hover .menu-content,
+.side-menu.locked .menu-content {
+  opacity: 1;
+}
+
+/* Links */
+.side-menu a {
+  padding: 10px 12px;
   color: #fff;
   text-decoration: none;
-  padding: 8px 10px;
-  transition: background 0.2s;
+  display: block;
 }
 
-.side-menu .menu-content a:hover,
-.side-menu .menu-content a.active {
+.side-menu a:hover {
   background: #222;
 }
-
-.side-menu .menu-content .icon {
-  margin-right: 8px;
-}
-
-/* ===============================
-   MAIN CONTENT
-   =============================== */
-.main-content {
-  margin-left: 50px; /* leave space for sidebar */
-  padding: 20px;
-}
-
