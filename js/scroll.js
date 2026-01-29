@@ -18,11 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("keydown", (e) => {
     if (navigating) return;
 
-    // Ignore typing in inputs
     const tag = document.activeElement.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
 
-    /* ---------- NEXT PAGE ---------- */
     if (
       (e.key === "ArrowRight" || e.key === "d" || e.key === "D") ||
       (e.key === "ArrowDown" && atBottom())
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 300);
     }
 
-    /* ---------- PREVIOUS PAGE ---------- */
     if (
       (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") ||
       (e.key === "ArrowUp" && atTop())
