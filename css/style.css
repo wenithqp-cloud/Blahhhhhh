@@ -1,10 +1,14 @@
 /* ===============================
-   GLOBAL SETTINGS + FADE
+   GLOBAL SETTINGS + FADE SYSTEM
    =============================== */
-* { box-sizing: border-box; scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
   background: #0b0f1a;
   color: #eaeaea;
@@ -13,9 +17,17 @@ body {
   transition: opacity 0.3s ease;
 }
 
-body.loaded { opacity: 1; }
-body.fade-out { opacity: 0; }
+body.loaded {
+  opacity: 1;
+}
 
+body.fade-out {
+  opacity: 0;
+}
+
+/* ===============================
+   STAR CANVAS
+   =============================== */
 #starCanvas {
   position: fixed;
   inset: 0;
@@ -23,14 +35,14 @@ body.fade-out { opacity: 0; }
 }
 
 /* ===============================
-   SIDE MENU
+   SIDE MENU (HOVER + CLICK)
    =============================== */
 .side-menu {
   position: fixed;
-  top: 50px;
+  top: 0;
   left: 0;
-  width: 60px;
-  height: calc(100% - 50px);
+  width: 70px; /* default collapsed width */
+  height: 100%;
   background: #111;
   color: #fff;
   z-index: 1000;
@@ -43,30 +55,122 @@ body.fade-out { opacity: 0; }
   width: 200px;
 }
 
-.menu-label { padding: 12px; cursor: pointer; white-space: nowrap; }
-.menu-content a {
+.menu-label {
+  padding: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: bold;
+  border-bottom: 1px solid #222;
+}
+
+.menu-content {
+  opacity: 0;
+  transition: opacity 0.2s ease 0.1s;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+}
+
+.side-menu:hover .menu-content,
+.side-menu.locked .menu-content {
+  opacity: 1;
+}
+
+.side-menu a {
+  padding: 12px 15px;
   color: #fff;
   text-decoration: none;
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
 }
-.menu-content a:hover,
-.menu-content a.active { background: #222; }
 
-.menu-content .icon { margin-right: 8px; flex-shrink: 0; } /* always visible */
-.menu-content .label { white-space: nowrap; opacity: 0; transition: opacity 0.2s; }
-.side-menu:hover .menu-content .label,
-.side-menu.locked .menu-content .label { opacity: 1; }
+.side-menu a:hover,
+.side-menu a.active {
+  background: #222;
+}
+
+.side-menu .icon {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+/* Icons always visible even when menu collapsed */
+.side-menu a .icon {
+  min-width: 30px;
+  text-align: center;
+}
 
 /* ===============================
    MAIN CONTENT
    =============================== */
-.main-content, .content {
-  margin-left: 60px;  /* adjust for sidebar */
+.main-content {
+  margin-left: 70px; /* leave space for sidebar */
   padding: 20px;
-  max-width: 1000px;
+  transition: margin-left 0.3s ease;
 }
 
-h1 { font-size: 2.5rem; margin-bottom: 20px; }
-p, li { font-size: 1.2rem; line-height: 1.6; }
+.side-menu:hover ~ .main-content,
+.side-menu.locked ~ .main-content {
+  margin-left: 200px;
+}
+
+.main-content h1 {
+  margin-bottom: 15px;
+}
+
+.main-content .content {
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+/* ===============================
+   FOOTER
+   =============================== */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 70px;
+  width: calc(100% - 70px);
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 14px;
+  color: #aaa;
+  transition: left 0.3s ease, width 0.3s ease;
+}
+
+.side-menu:hover ~ .footer,
+.side-menu.locked ~ .footer {
+  left: 200px;
+  width: calc(100% - 200px);
+}
+
+/* ===============================
+   LINKS & TEXT
+   =============================== */
+a {
+  color: #eaeaea;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+@media (max-width: 600px) {
+  .main-content {
+    margin-left: 50px;
+  }
+  .footer {
+    left: 50px;
+    width: calc(100% - 50px);
+  }
+  .side-menu {
+    width: 50px;
+  }
+  .side-menu:hover,
+  .side-menu.locked {
+    width: 150px;
+  }
+}
