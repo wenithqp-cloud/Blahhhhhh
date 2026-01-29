@@ -1,15 +1,54 @@
 /* ===============================
-   SIDE MENU (HOVER + CLICK)
+   GLOBAL RESET
+   =============================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #eaeaea;
+  overflow-x: hidden;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+body.fade-out {
+  opacity: 0;
+}
+
+/* ===============================
+   STAR BACKGROUND (FIXED)
+   =============================== */
+#starCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;          /* 🔑 FORCE behind everything */
+  pointer-events: none; /* 🔑 never block clicks */
+}
+
+/* ===============================
+   SIDE MENU (VISIBLE + WORKING)
    =============================== */
 .side-menu {
   position: fixed;
-  top: 50px;
+  top: 0;
   left: 0;
   width: 50px;
-  height: calc(100% - 50px);
+  height: 100vh;
   background: #111;
   color: #fff;
   z-index: 1000;
+
   overflow: hidden;
   transition: width 0.3s ease;
 }
@@ -22,9 +61,11 @@
 
 /* Label always visible */
 .menu-label {
-  padding: 12px;
+  padding: 14px;
   cursor: pointer;
   white-space: nowrap;
+  font-weight: bold;
+  color: #fff;
 }
 
 /* Menu content */
@@ -41,7 +82,7 @@
 
 /* Links */
 .side-menu a {
-  padding: 10px 12px;
+  padding: 10px 14px;
   color: #fff;
   text-decoration: none;
   display: block;
@@ -50,4 +91,14 @@
 .side-menu a:hover,
 .side-menu a.active {
   background: #222;
+}
+
+/* ===============================
+   MAIN CONTENT
+   =============================== */
+.main-content {
+  margin-left: 50px;
+  padding: 20px;
+  position: relative;
+  z-index: 1; /* 🔑 always above background */
 }
