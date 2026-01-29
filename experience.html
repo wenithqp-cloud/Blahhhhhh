@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experience</title>
 
-  <!-- Prefetch other pages for faster navigation -->
   <link rel="prefetch" href="index.html">
   <link rel="prefetch" href="about.html">
   <link rel="prefetch" href="skills.html">
@@ -14,71 +14,40 @@
 
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-<canvas id="starCanvas"></canvas>
+  <canvas id="starCanvas"></canvas>
 
-<!-- Side Menu -->
-<div class="side-menu" id="sideMenu">
-  <div class="menu-label">INDEX</div>
-  <div class="menu-content">
-    <a href="index.html">
-      <span class="icon">🏠</span>
-      <span class="label">Home</span>
-    </a>
-    <a href="about.html">
-      <span class="icon">ℹ️</span>
-      <span class="label">About</span>
-    </a>
-    <a href="skills.html">
-      <span class="icon">💻</span>
-      <span class="label">Skills</span>
-    </a>
-    <a href="projects.html">
-      <span class="icon">📂</span>
-      <span class="label">Projects</span>
-    </a>
-    <a href="experience.html" class="active">
-      <span class="icon">🛠️</span>
-      <span class="label">Experience</span>
-    </a>
-    <a href="goals.html">
-      <span class="icon">🎯</span>
-      <span class="label">Goals</span>
-    </a>
-    <a href="contact.html">
-      <span class="icon">📞</span>
-      <span class="label">Contact</span>
-    </a>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-label">INDEX</div>
+    <div class="menu-content">
+      <a href="index.html"><span class="icon">🏠</span><span class="label">Home</span></a>
+      <a href="about.html"><span class="icon">ℹ️</span><span class="label">About</span></a>
+      <a href="skills.html"><span class="icon">💻</span><span class="label">Skills</span></a>
+      <a href="projects.html"><span class="icon">📂</span><span class="label">Projects</span></a>
+      <a href="experience.html" class="active"><span class="icon">🛠️</span><span class="label">Experience</span></a>
+      <a href="goals.html"><span class="icon">🎯</span><span class="label">Goals</span></a>
+      <a href="contact.html"><span class="icon">📞</span><span class="label">Contact</span></a>
+    </div>
   </div>
-</div>
 
-<!-- Page Content -->
-<div class="content">
-  <h1>My Experiences</h1> 
-  <p><strong>Learning Through Hands-On Projects:</strong> I’ve learned that the best way for me to understand something is by building it myself. Taking apart computers, experimenting with devices, and trying to fix mistakes has taught me patience, problem-solving, and resilience. Each failure became a lesson, helping me develop skills I can apply in school and work environments.</p> 
-  
-  <p><strong>School Trip to New York and Washington, D.C.:</strong> This trip taught me personal growth and the value of observation. Working through social anxiety, I learned how to navigate new environments and appreciate different perspectives. Photographing my group and exploring historic sites helped me develop attention to detail, planning, and creativity while building stronger bonds with peers.</p>
-  
-  <p><strong>Professional Experience at Cowabunga Bay Water Park:</strong> Working at Cowabunga Bay in Henderson gave me real-world skills in customer service, teamwork, and responsibility. I learned how to communicate clearly, handle challenges in a fast-paced setting, and adapt to different situations. This experience reinforced the importance of reliability, time management, and maintaining a positive attitude while helping others enjoy their experience.</p>
-  
-  <p><strong>Overall Lessons:</strong> From personal projects, school trips, and work experiences, I’ve learned the value of curiosity, persistence, and collaboration. These experiences have taught me to approach challenges with creativity, patience, and an openness to learning from mistakes.</p> 
-</div>
+  <div class="main-content">
+    <h1>My Experiences</h1>
+    <p><strong>Learning Through Hands-On Projects:</strong> I’ve learned that the best way for me to understand something is by building it myself...</p>
+    <p><strong>School Trip to New York and Washington, D.C.:</strong> This trip taught me personal growth and the value of observation...</p>
+    <p><strong>Professional Experience at Cowabunga Bay Water Park:</strong> Working at Cowabunga Bay in Henderson gave me real-world skills in customer service...</p>
+    <p><strong>Overall Lessons:</strong> Curiosity, persistence, and collaboration have shaped me...</p>
+  </div>
 
-<!-- Scripts -->
-<script src="js/menu.js"></script>
-<script src="js/stars.js"></script>
-<script src="js/scroll.js"></script>
-<script>
-  // Fade in on page load
-  window.addEventListener("load", () => {
-    document.body.classList.add("loaded");
-  });
-</script>
+  <script src="js/menu.js"></script>
+  <script src="js/stars.js"></script>
+  <script src="js/scroll.js"></script>
+  <script>
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
+  </script>
 
-<!-- Hidden links for scroll navigation -->
-<a href="goals.html" class="next-page" style="display:none"></a>
-<a href="projects.html" class="prev-page" style="display:none"></a>
-
+  <a href="goals.html" class="next-page" style="display:none"></a>
+  <a href="projects.html" class="prev-page" style="display:none"></a>
 </body>
 </html>
