@@ -4,17 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects</title>
+
+  <!-- Prefetch pages -->
   <link rel="prefetch" href="index.html">
   <link rel="prefetch" href="about.html">
   <link rel="prefetch" href="skills.html">
   <link rel="prefetch" href="experience.html">
   <link rel="prefetch" href="goals.html">
   <link rel="prefetch" href="contact.html">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-<canvas id="starCanvas"></canvas>
 
+<body>
+  <!-- Star background -->
+  <canvas id="starCanvas"></canvas>
+
+  <!-- Side Menu -->
   <div class="side-menu" id="sideMenu">
     <div class="menu-label">INDEX</div>
     <div class="menu-content">
@@ -28,21 +35,30 @@
     </div>
   </div>
 
-  <div class="main-content">
+  <!-- Main Content -->
+  <main class="main-content">
     <h1>My Projects</h1>
     <p>Yeah I swear I’ll add real projects and images here.</p>
-  </div>
+  </main>
 
-  <div class="footer">Adrian Zamora © 2026</div>
+  <!-- Footer -->
+  <footer class="footer">
+    Adrian Zamora © 2026
+  </footer>
 
-  <script src="js/menu.js"></script>
-  <script src="js/stars.js"></script>
-  <script src="js/scroll.js"></script>
-  <script>
-    window.addEventListener("load", () => document.body.classList.add("loaded"));
+  <!-- Hidden navigation for keyboard scroll -->
+  <a href="experience.html" class="next-page" hidden></a>
+  <a href="skills.html" class="prev-page" hidden></a>
+
+  <!-- Scripts -->
+  <script src="js/menu.js" defer></script>
+  <script src="js/stars.js" defer></script>
+  <script src="js/scroll.js" defer></script>
+
+  <script defer>
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
   </script>
-
-  <a href="experience.html" class="next-page" style="display:none"></a>
-  <a href="skills.html" class="prev-page" style="display:none"></a>
 </body>
 </html>
