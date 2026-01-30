@@ -6,28 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   paragraphs.forEach(p => {
     const strong = p.querySelector("strong");
-
-    // Only wrap paragraphs that have <strong>
     if (!strong) return;
 
     const titleText = strong.innerHTML;
     const contentText = p.innerHTML.replace(strong.outerHTML, "").trim();
 
-    // Create wrapper
     const wrapper = document.createElement("div");
     wrapper.className = "exp-item";
 
-    // Create clickable title
     const title = document.createElement("div");
     title.className = "exp-title";
     title.innerHTML = titleText;
 
-    // Create content container
     const content = document.createElement("div");
     content.className = "exp-content";
     content.innerHTML = contentText;
 
-    // Toggle on click
     title.addEventListener("click", () => {
       wrapper.classList.toggle("active");
     });
