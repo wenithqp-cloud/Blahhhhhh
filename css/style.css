@@ -28,7 +28,7 @@ body.fade-out { opacity: 0; }
 }
 
 /* ===============================
-   SIDE MENU (HOVER + CLICK)
+   SIDE MENU (DESKTOP)
    =============================== */
 .side-menu {
   position: fixed;
@@ -66,15 +66,15 @@ body.fade-out { opacity: 0; }
   padding: 10px 12px;
   color: #fff;
   text-decoration: none;
-  transition: background 0.2s;
 }
 
 .side-menu a:hover,
-.side-menu a.active { background: #222; }
+.side-menu a.active {
+  background: #222;
+}
 
 .side-menu .icon {
   font-size: 24px;
-  margin-right: 0;
   min-width: 30px;
   text-align: center;
 }
@@ -82,12 +82,13 @@ body.fade-out { opacity: 0; }
 .side-menu .label {
   margin-left: 10px;
   opacity: 0;
-  white-space: nowrap;
   transition: opacity 0.3s ease;
 }
 
 .side-menu:hover .label,
-.side-menu.locked .label { opacity: 1; }
+.side-menu.locked .label {
+  opacity: 1;
+}
 
 /* ===============================
    MAIN CONTENT
@@ -95,19 +96,23 @@ body.fade-out { opacity: 0; }
 .main-content {
   margin-left: 60px;
   padding: 40px 20px;
-  transition: margin-left 0.3s ease;
   max-width: 900px;
+  transition: margin-left 0.3s ease;
 }
 
 .side-menu:hover ~ .main-content,
-.side-menu.locked ~ .main-content { margin-left: 200px; }
+.side-menu.locked ~ .main-content {
+  margin-left: 200px;
+}
 
-.main-content p { margin-bottom: 20px; line-height: 1.6; }
-.main-content ul { margin-bottom: 20px; padding-left: 20px; }
-.main-content li { margin-bottom: 10px; line-height: 1.5; }
+.main-content p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
 
-.main-content h1 { margin-top: 20px; margin-bottom: 25px; line-height: 1.2; }
-.main-content h2 { margin-top: 20px; margin-bottom: 20px; line-height: 1.3; }
+.main-content h1 {
+  margin-bottom: 25px;
+}
 
 /* ===============================
    FOOTER
@@ -116,84 +121,95 @@ body.fade-out { opacity: 0; }
   position: fixed;
   bottom: 10px;
   right: 10px;
-  text-align: right;
   color: #aaa;
   font-size: 14px;
 }
 
 /* ===============================
-   MOBILE MENU BUTTON + DROPDOWN
+   MOBILE MENU (HARD LOCKED)
    =============================== */
 #mobileMenuBtn,
 #mobileDropdown {
-  display: none !important; /* hidden on PC */
+  display: none;
 }
 
+/* ===============================
+   MOBILE ONLY
+   =============================== */
 @media (max-width: 768px) {
-  .side-menu { display: none; }
+
+  .side-menu {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 25px 15px;
+  }
 
   #mobileMenuBtn {
-    display: block !important;
+    display: block;
     position: fixed;
     top: 15px;
     right: 15px;
-    z-index: 1001;
+    z-index: 2001;
     background: #111;
     color: #fff;
     border: none;
     font-size: 28px;
     padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
   }
 
   #mobileDropdown {
     display: none;
     position: fixed;
-    top: 55px;
+    top: 60px;
     right: 15px;
+    z-index: 2000;
     background: #111;
-    color: #fff;
-    border-radius: 5px;
-    flex-direction: column;
-    z-index: 1000;
+    border-radius: 8px;
     min-width: 180px;
+    overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
   }
 
   #mobileDropdown a {
-    padding: 12px 16px;
     display: block;
+    padding: 12px 16px;
     color: #fff;
     text-decoration: none;
     border-bottom: 1px solid #222;
-    font-size: 16px;
-    cursor: pointer;
   }
 
-  #mobileDropdown a:last-child { border-bottom: none; }
-  #mobileDropdown a:hover { background: #222; }
+  #mobileDropdown a:last-child {
+    border-bottom: none;
+  }
+
+  #mobileDropdown a:hover {
+    background: #222;
+  }
+
+  html, body {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* ===============================
-   MOBILE EXPERIENCE DROPDOWNS
+   EXPERIENCE DROPDOWNS (MOBILE)
    =============================== */
 @media (max-width: 768px) {
   .exp-item { margin-bottom: 1rem; }
 
   .exp-title {
-    font-weight: bold;
-    cursor: pointer;
-    display: block;
     padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
     border-radius: 8px;
-  }
-
-  .exp-title::after {
-    content: " ▾";
-    float: right;
-    opacity: 0.7;
+    cursor: pointer;
+    font-weight: bold;
   }
 
   .exp-content {
@@ -201,120 +217,10 @@ body.fade-out { opacity: 0; }
     overflow: hidden;
     transition: max-height 0.35s ease;
     padding-left: 0.75rem;
-    box-sizing: border-box;
   }
 
   .exp-item.active .exp-content {
     max-height: 500px;
     margin-top: 0.5rem;
-  }
-}
-
-/* ===============================
-   MOBILE TEXT IMPROVEMENTS
-   =============================== */
-@media (max-width: 480px) {
-  .main-content {
-    padding: 20px 15px;
-    margin-left: 0;
-  }
-
-  .main-content h1 { font-size: 1.6rem; margin-bottom: 20px; }
-  .main-content p, .main-content li { font-size: 1rem; }
-  .footer { font-size: 12px; }
-}
-
-/* ===============================
-   SWIPE INDICATORS FOR MOBILE
-   =============================== */
-@media (max-width: 768px) {
-  body::before,
-  body::after {
-    content: '';
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    color: rgba(255,255,255,0.7);
-    z-index: 1002;
-    pointer-events: none;
-  }
-
-  body::before {
-    content: '<';
-    left: 10px;
-    display: none; /* will show dynamically via JS */
-  }
-
-  body::after {
-    content: '>';
-    right: 10px;
-    display: none; /* will show dynamically via JS */
-  }
-}
-/* ===============================
-   MOBILE MENU + SCROLL FIXES
-   =============================== */
-
-/* Hide mobile menu by default on desktop */
-#mobileMenuBtn,
-#mobileDropdown {
-  display: none !important;
-}
-
-/* Mobile styles */
-@media (max-width: 768px) {
-  /* Hide side menu on mobile */
-  .side-menu { display: none !important; }
-
-  /* Show mobile menu button */
-  #mobileMenuBtn {
-    display: block !important;
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 1001;
-    background: #111;
-    color: #fff;
-    border: none;
-    font-size: 28px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  /* Mobile dropdown menu */
-  #mobileDropdown {
-    display: none; /* hidden until toggled */
-    position: fixed;
-    top: 55px;
-    right: 15px;
-    background: #111;
-    color: #fff;
-    border-radius: 5px;
-    flex-direction: column;
-    z-index: 1000;
-    min-width: 180px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    overflow: hidden;
-  }
-
-  #mobileDropdown a {
-    padding: 12px 16px;
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 1px solid #222;
-    font-size: 16px;
-  }
-
-  #mobileDropdown a:last-child { border-bottom: none; }
-  #mobileDropdown a:hover { background: #222; }
-
-  /* Ensure scrolling works correctly on mobile */
-  body, html {
-    height: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
   }
 }
