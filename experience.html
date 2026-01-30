@@ -18,19 +18,19 @@
 </head>
 
 <body>
-  
-    <!-- Add this button inside <body>, ideally at top -->
-<button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
-<div id="mobileDropdown" class="mobile-dropdown">
-  <a href="index.html">🏠 Home</a>
-  <a href="about.html">ℹ️ About</a>
-  <a href="skills.html">💻 Skills</a>
-  <a href="projects.html">📂 Projects</a>
-  <a href="experience.html">🛠️ Experience</a>
-  <a href="goals.html">🎯 Goals</a>
-  <a href="contact.html">📞 Contact</a>
-</div>
-  <!-- Star background -->
+  <!-- Mobile Menu Button -->
+  <button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
+  <div id="mobileDropdown" class="mobile-dropdown">
+    <a href="index.html">🏠 Home</a>
+    <a href="about.html">ℹ️ About</a>
+    <a href="skills.html">💻 Skills</a>
+    <a href="projects.html">📂 Projects</a>
+    <a href="experience.html">🛠️ Experience</a>
+    <a href="goals.html">🎯 Goals</a>
+    <a href="contact.html">📞 Contact</a>
+  </div>
+
+  <!-- Star Background -->
   <canvas id="starCanvas"></canvas>
 
   <!-- Side Menu -->
@@ -50,10 +50,34 @@
   <!-- Main Content -->
   <main class="main-content">
     <h1>My Experiences</h1>
-    <p><strong>Learning Through Hands-On Projects:</strong> I’ve learned that the best way for me to understand something is by building it myself. Taking apart computers, experimenting with devices, and trying to fix mistakes has taught me patience, problem-solving, and resilience. Each failure became a lesson, helping me develop skills I can apply in school and work environments.</p>
-    <p><strong>School Trip to New York and Washington, D.C.:</strong> This trip taught me personal growth and the value of observation. Working through social anxiety, I learned how to navigate new environments and appreciate different perspectives. Photographing my group and exploring historic sites helped me develop attention to detail, planning, and creativity while building stronger bonds with peers.</p>
-    <p><strong>Professional Experience at Cowabunga Bay Water Park:</strong>  Working at Cowabunga Bay in Henderson gave me real-world skills in customer service, teamwork, and responsibility. I learned how to communicate clearly, handle challenges in a fast-paced setting, and adapt to different situations. This experience reinforced the importance of reliability, time management, and maintaining a positive attitude while helping others enjoy their experience.</p>
-    <p><strong>Overall Lessons:</strong> From personal projects, school trips, and work experiences, I have learned the value of curiosity, persistence, and collaboration. These experiences have taught me to approach challenges with creativity, patience, and an openness to learning from mistakes.</p>
+
+    <div class="exp-item">
+      <div class="exp-title"><strong>Learning Through Hands-On Projects:</strong></div>
+      <div class="exp-content">
+        I’ve learned that the best way for me to understand something is by building it myself. Taking apart computers, experimenting with devices, and trying to fix mistakes has taught me patience, problem-solving, and resilience. Each failure became a lesson, helping me develop skills I can apply in school and work environments.
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-title"><strong>School Trip to New York and Washington, D.C.:</strong></div>
+      <div class="exp-content">
+        This trip taught me personal growth and the value of observation. Working through social anxiety, I learned how to navigate new environments and appreciate different perspectives. Photographing my group and exploring historic sites helped me develop attention to detail, planning, and creativity while building stronger bonds with peers.
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-title"><strong>Professional Experience at Cowabunga Bay Water Park:</strong></div>
+      <div class="exp-content">
+        Working at Cowabunga Bay in Henderson gave me real-world skills in customer service, teamwork, and responsibility. I learned how to communicate clearly, handle challenges in a fast-paced setting, and adapt to different situations. This experience reinforced the importance of reliability, time management, and maintaining a positive attitude while helping others enjoy their experience.
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-title"><strong>Overall Lessons:</strong></div>
+      <div class="exp-content">
+        From personal projects, school trips, and work experiences, I have learned the value of curiosity, persistence, and collaboration. These experiences have taught me to approach challenges with creativity, patience, and an openness to learning from mistakes.
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
@@ -61,7 +85,7 @@
     Adrian Zamora © 2026
   </footer>
 
-  <!-- Hidden navigation (keyboard scrolling) -->
+  <!-- Hidden Navigation -->
   <a href="goals.html" class="next-page" hidden></a>
   <a href="projects.html" class="prev-page" hidden></a>
 
@@ -69,11 +93,9 @@
   <script src="js/menu.js" defer></script>
   <script src="js/stars.js" defer></script>
   <script src="js/scroll.js" defer></script>
-<script src="js/dropdown-paragraphs.js" defer></script>
+  <script src="js/dropdown-paragraphs.js" defer></script>
   <script defer>
-    window.addEventListener("load", () => {
-      document.body.classList.add("loaded");
-    });
+    window.addEventListener("load", () => document.body.classList.add("loaded"));
   </script>
 </body>
 </html>
