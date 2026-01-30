@@ -8,7 +8,7 @@ let particles = [];
 const STAR_COUNT = 150;
 const BIG_STAR_COUNT = 10;
 const MAX_STARS = 175;
-const MAX_CONNECTIONS = 1; // each star connects to 2 closest stars max
+const MAX_CONNECTIONS = 0; // each star connects to 0 closest stars max
 const CONNECTION_UPDATE_INTERVAL = 3500; // 3.5 seconds
 
 let mouse = { x: null, y: null };
