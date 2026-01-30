@@ -124,19 +124,20 @@ body.fade-out { opacity: 0; }
 /* ===============================
    MOBILE MENU BUTTON + DROPDOWN
    =============================== */
+
+/* Always hide mobile menu on PC */
 #mobileMenuBtn,
 #mobileDropdown {
-  display: none; /* hidden on PC */
+  display: none !important;
 }
 
 @media (max-width: 768px) {
   /* Hide side menu on mobile */
   .side-menu { display: none; }
 
-  #mobileMenuBtn { display: block; }
-  #mobileDropdown { display: none; }
-
-  .mobile-menu-btn {
+  /* Show mobile menu on mobile only */
+  #mobileMenuBtn {
+    display: block !important;
     position: fixed;
     top: 15px;
     right: 15px;
@@ -150,7 +151,8 @@ body.fade-out { opacity: 0; }
     cursor: pointer;
   }
 
-  .mobile-dropdown {
+  #mobileDropdown {
+    display: none; /* hidden until button click */
     position: fixed;
     top: 55px;
     right: 15px;
@@ -163,7 +165,7 @@ body.fade-out { opacity: 0; }
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
   }
 
-  .mobile-dropdown a {
+  #mobileDropdown a {
     padding: 12px 16px;
     display: block;
     color: #fff;
@@ -173,8 +175,8 @@ body.fade-out { opacity: 0; }
     cursor: pointer;
   }
 
-  .mobile-dropdown a:last-child { border-bottom: none; }
-  .mobile-dropdown a:hover { background: #222; }
+  #mobileDropdown a:last-child { border-bottom: none; }
+  #mobileDropdown a:hover { background: #222; }
 }
 
 /* ===============================
