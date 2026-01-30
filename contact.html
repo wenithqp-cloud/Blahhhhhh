@@ -11,21 +11,76 @@
   <link rel="prefetch" href="experience.html">
   <link rel="prefetch" href="goals.html">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ==============================
+       CONTACT PAGE STYLING
+       ============================== */
+    .main-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .main-content li {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-size: 24px;
+      line-height: 1.5;
+      transition: background 0.2s ease;
+    }
+
+    .main-content li:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .main-content a {
+      color: #ffd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .main-content a:hover {
+      text-decoration: underline;
+    }
+
+    /* MOBILE SPECIFIC */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 20px 15px;
+      }
+
+      .main-content h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .main-content li {
+        font-size: 22px;
+        padding: 12px 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Add this button inside <body>, ideally at top -->
-<button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
-<div id="mobileDropdown" class="mobile-dropdown">
-  <a href="index.html">🏠 Home</a>
-  <a href="about.html">ℹ️ About</a>
-  <a href="skills.html">💻 Skills</a>
-  <a href="projects.html">📂 Projects</a>
-  <a href="experience.html">🛠️ Experience</a>
-  <a href="goals.html">🎯 Goals</a>
-  <a href="contact.html">📞 Contact</a>
-</div>
+  <!-- Mobile menu button -->
+  <button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
+  <div id="mobileDropdown" class="mobile-dropdown">
+    <a href="index.html">🏠 Home</a>
+    <a href="about.html">ℹ️ About</a>
+    <a href="skills.html">💻 Skills</a>
+    <a href="projects.html">📂 Projects</a>
+    <a href="experience.html">🛠️ Experience</a>
+    <a href="goals.html">🎯 Goals</a>
+    <a href="contact.html">📞 Contact</a>
+  </div>
+
   <canvas id="starCanvas"></canvas>
 
+  <!-- Side menu -->
   <div class="side-menu" id="sideMenu">
     <div class="menu-label">INDEX</div>
     <div class="menu-content">
@@ -39,11 +94,13 @@
     </div>
   </div>
 
+  <!-- Main content -->
   <div class="main-content">
     <h1>Contact Me</h1>
     <ul>
-      <li style="font-size:30px;">Cellular Number: +1 (725) 248-8644</li>
-      <li style="font-size:30px;">Email: <strong>Legokidforever2008@gmail.com</strong></li>
+      <li>📱 Cellular Number: <a href="tel:+17252488644">+1 (725) 248-8644</a></li>
+      <li>✉️ Email: <a href="mailto:Legokidforever2008@gmail.com">Legokidforever2008@gmail.com</a></li>
+      <li>✉️ Email: <a href="mailto:wenithqp@gmail.com">wenithqp@gmail.com</a></li>
     </ul>
   </div>
 
