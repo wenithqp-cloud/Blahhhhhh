@@ -1,4 +1,26 @@
 /* ===============================
+   MOBILE MENU
+   =============================== */
+
+/* Hide mobile menu by default */
+#mobileMenuBtn,
+#mobileDropdown {
+  display: none;
+}
+
+/* Show only on small screens (mobile/tablet) */
+@media (max-width: 768px) {
+  #mobileMenuBtn,
+  #mobileDropdown {
+    display: block;
+  }
+
+  /* Optional: hide the side menu on small screens */
+  .side-menu {
+    display: none;
+  }
+}
+/* ===============================
    GLOBAL SETTINGS + FADE SYSTEM
    =============================== */
 * {
