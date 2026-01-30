@@ -168,3 +168,50 @@ body.fade-out {
   color: #aaa;
   font-size: 14px;
 }
+/* ===============================
+   MOBILE MENU
+   =============================== */
+@media (max-width: 768px) {
+  .side-menu { display: none; }
+
+  .mobile-menu-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1001;
+    background: #111;
+    color: #fff;
+    border: none;
+    font-size: 28px;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+
+  .mobile-dropdown {
+    display: none;
+    position: fixed;
+    top: 55px;
+    right: 15px;
+    background: #111;
+    color: #fff;
+    border-radius: 5px;
+    flex-direction: column;
+    z-index: 1000;
+    min-width: 150px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  }
+
+  .mobile-dropdown a {
+    padding: 10px 15px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #222;
+  }
+
+  .mobile-dropdown a:last-child { border-bottom: none; }
+
+  .mobile-dropdown a:hover {
+    background: #222;
+  }
+}
