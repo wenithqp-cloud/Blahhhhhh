@@ -4,30 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About</title>
+
+  <!-- Prefetch -->
   <link rel="prefetch" href="index.html">
   <link rel="prefetch" href="skills.html">
   <link rel="prefetch" href="projects.html">
   <link rel="prefetch" href="experience.html">
   <link rel="prefetch" href="goals.html">
   <link rel="prefetch" href="contact.html">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-  <body>
-  <!-- Add this button inside <body>, ideally at top -->
-<button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
-<div id="mobileDropdown" class="mobile-dropdown">
-  <a href="index.html">🏠 Home</a>
-  <a href="about.html">ℹ️ About</a>
-  <a href="skills.html">💻 Skills</a>
-  <a href="projects.html">📂 Projects</a>
-  <a href="experience.html">🛠️ Experience</a>
-  <a href="goals.html">🎯 Goals</a>
-  <a href="contact.html">📞 Contact</a>
-</div>
+<body>
 
+  <!-- Mobile Menu -->
+  <button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
+  <div id="mobileDropdown" class="mobile-dropdown">
+    <a href="index.html">🏠 Home</a>
+    <a href="about.html">ℹ️ About</a>
+    <a href="skills.html">💻 Skills</a>
+    <a href="projects.html">📂 Projects</a>
+    <a href="experience.html">🛠️ Experience</a>
+    <a href="goals.html">🎯 Goals</a>
+    <a href="contact.html">📞 Contact</a>
+  </div>
+
+  <!-- Background -->
   <canvas id="starCanvas"></canvas>
 
+  <!-- Side Menu -->
   <div class="side-menu" id="sideMenu">
     <div class="menu-label">INDEX</div>
     <div class="menu-content">
@@ -41,29 +47,83 @@
     </div>
   </div>
 
-  <div class="main-content">
+  <!-- Main Content -->
+  <main class="main-content">
     <h1>About Me</h1>
-    <p><strong>How i've learned </strong></p>
-    <p>I’ve always learned best by doing—building, experimenting, and sometimes making mistakes just to see how things work. Taking apart a computer or trying to fix something on my own has taught me more than any textbook ever could, giving me a sense of accomplishment that tests can’t measure. Mistakes, I’ve found, are just stepping stones to understanding and growth.</p>
-    <p><strong>Growth </strong></p>
-    <p>One experience that shaped me was my junior year high school trip to New York City and Washington, D.C., for my Teaching and Training class. At first, I felt like I didn’t deserve to go, and my social anxiety kept me on the sidelines. I found my own way to engage by photographing my group from different angles, giving me a unique perspective on the trip. From visiting the Lincoln Memorial to reaching the top of the Empire State Building, I realized that the most meaningful lessons often come from seeing the world, connecting with others, and trying new things—even if it means stepping outside your comfort zone.</p>
-    <p><strong>Personal Life </strong></p>
-    <p>Beyond school, working at Cowabunga Bay Water Park in Henderson taught me responsibility, teamwork, and adaptability. Whether ensuring safety, assisting guests, or helping operations run smoothly, I learned to communicate effectively and handle challenges in a fast-paced environment. Together, my hands-on projects, school trips, and work experiences have shaped me into someone who approaches life with curiosity, patience, and a willingness to experiment—knowing that every mistake can lead to growth and discovery.</p>
-  </div>
 
-  <div class="footer">
-     <a href="https://example.com" style="color: inherit; text-decoration: none;">
-       Adrian Zamora © 2026</div>
+    <!-- DROPDOWN 1 -->
+    <div class="dropdown-item">
+      <div class="dropdown-header">How I’ve Learned</div>
+      <div class="dropdown-content">
+        <p>
+          I’ve always learned best by actually doing things—building, experimenting,
+          and sometimes messing up just to understand how something works.
+          Taking apart computers or fixing things on my own has taught me more
+          than any textbook ever could.  
+          Mistakes aren’t failures to me; they’re how I learn.
+        </p>
+      </div>
+    </div>
 
-  <script src="js/menu.js"></script>
-  <script src="js/stars.js"></script>
-  <script src="js/scroll.js"></script>
+    <!-- DROPDOWN 2 -->
+    <div class="dropdown-item">
+      <div class="dropdown-header">Personal Growth</div>
+      <div class="dropdown-content">
+        <p>
+          A major moment of growth for me was my junior-year school trip to
+          New York City and Washington, D.C. At first, I struggled with feeling
+          like I didn’t belong and dealing with social anxiety.
+        </p>
+        <p>
+          I found my own way to participate by photographing my group, which gave
+          me a unique perspective. Visiting places like the Lincoln Memorial and
+          the Empire State Building showed me that real growth comes from stepping
+          outside your comfort zone.
+        </p>
+      </div>
+    </div>
+
+    <!-- DROPDOWN 3 -->
+    <div class="dropdown-item">
+      <div class="dropdown-header">Life & Work Experience</div>
+      <div class="dropdown-content">
+        <p>
+          Outside of school, working at Cowabunga Bay Water Park in Henderson
+          taught me responsibility, teamwork, and adaptability.
+        </p>
+        <p>
+          Whether helping guests, ensuring safety, or working with a team in a
+          fast-paced environment, I learned how to communicate clearly and stay
+          calm under pressure. All of these experiences have shaped how I approach
+          challenges today.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer (Rickroll-ready 😉) -->
+  <footer class="footer">
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&autoplay=1&mute=1"
+       style="color: inherit; text-decoration: none;">
+      Adrian Zamora © 2026
+    </a>
+  </footer>
+
+  <!-- Hidden Navigation -->
+  <a href="skills.html" class="next-page" hidden></a>
+  <a href="index.html" class="prev-page" hidden></a>
+
+  <!-- Scripts -->
+  <script src="js/menu.js" defer></script>
+  <script src="js/stars.js" defer></script>
+  <script src="js/scroll.js" defer></script>
   <script src="js/dropdown-paragraphs.js" defer></script>
   <script>
-    window.addEventListener("load", () => document.body.classList.add("loaded"));
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
   </script>
 
-  <a href="skills.html" class="next-page" style="display:none"></a>
-  <a href="index.html" class="prev-page" style="display:none"></a>
 </body>
 </html>
