@@ -168,3 +168,38 @@ body.fade-out { opacity: 0; }
   .mobile-dropdown a:last-child { border-bottom: none; }
   .mobile-dropdown a:hover { background: #222; }
 }
+/* ===============================
+   MOBILE EXPERIENCE DROPDOWNS
+   =============================== */
+@media (max-width: 768px) {
+  .exp-item {
+    margin-bottom: 1rem;
+  }
+
+  .exp-title {
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+
+  .exp-title::after {
+    content: " ▾";
+    float: right;
+    opacity: 0.7;
+  }
+
+  .exp-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding-left: 0.75rem;
+  }
+
+  .exp-item.active .exp-content {
+    max-height: 500px;
+    margin-top: 0.5rem;
+  }
+}
