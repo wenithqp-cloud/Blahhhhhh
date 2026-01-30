@@ -7,9 +7,9 @@ let particles = [];
 
 const STAR_COUNT = 200;
 const BIG_STAR_COUNT = 15;
-const MAX_STARS = 600;
+const MAX_STARS = 250;
 const MAX_CONNECTIONS = 2; // each star connects to 2 closest stars max
-const CONNECTION_UPDATE_INTERVAL = 2000; // 2 seconds
+const CONNECTION_UPDATE_INTERVAL = 2500; // 2.5 seconds
 
 let mouse = { x: null, y: null };
 
@@ -32,7 +32,7 @@ class Star {
     this.y = Math.random() * canvas.height;
     this.radius = Math.random() * 1.5 + 0.5;
 
-    const speed = Math.random() * 0.3 + 0.2; // consistent speed
+    const speed = Math.random() * 0.2 + 0.1; // consistent speed
     const angle = Math.random() * Math.PI * 2;
     this.vx = Math.cos(angle) * speed;
     this.vy = Math.sin(angle) * speed;
