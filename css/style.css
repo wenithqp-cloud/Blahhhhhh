@@ -1,27 +1,4 @@
 /* ===============================
-   MOBILE MENU
-   =============================== */
-
-/* Hide mobile menu by default */
-#mobileMenuBtn,
-#mobileDropdown {
-  display: none;
-}
-
-/* Show only on small screens (mobile/tablet) */
-@media (max-width: 768px) {
-  #mobileMenuBtn,
-  #mobileDropdown {
-    display: block;
-  }
-
-  /* Hide the side menu on small screens */
-  .side-menu {
-    display: none;
-  }
-}
-
-/* ===============================
    GLOBAL SETTINGS + FADE SYSTEM
    =============================== */
 * {
@@ -119,12 +96,11 @@ body.fade-out { opacity: 0; }
   margin-left: 60px;
   padding: 40px 20px;
   transition: margin-left 0.3s ease;
+  max-width: 900px;
 }
 
 .side-menu:hover ~ .main-content,
 .side-menu.locked ~ .main-content { margin-left: 200px; }
-
-.main-content .content { max-width: 800px; }
 
 .main-content p { margin-bottom: 20px; line-height: 1.6; }
 .main-content ul { margin-bottom: 20px; padding-left: 20px; }
@@ -148,9 +124,19 @@ body.fade-out { opacity: 0; }
 /* ===============================
    MOBILE MENU BUTTON + DROPDOWN
    =============================== */
+#mobileMenuBtn,
+#mobileDropdown {
+  display: none; /* hidden on PC */
+}
+
 @media (max-width: 768px) {
+  /* Hide side menu on mobile */
+  .side-menu { display: none; }
+
+  #mobileMenuBtn { display: block; }
+  #mobileDropdown { display: none; }
+
   .mobile-menu-btn {
-    display: block;
     position: fixed;
     top: 15px;
     right: 15px;
@@ -165,7 +151,6 @@ body.fade-out { opacity: 0; }
   }
 
   .mobile-dropdown {
-    display: none;
     position: fixed;
     top: 55px;
     right: 15px;
@@ -225,4 +210,18 @@ body.fade-out { opacity: 0; }
     max-height: 500px;
     margin-top: 0.5rem;
   }
+}
+
+/* ===============================
+   MOBILE TEXT IMPROVEMENTS
+   =============================== */
+@media (max-width: 480px) {
+  .main-content {
+    padding: 20px 15px;
+    margin-left: 0;
+  }
+
+  .main-content h1 { font-size: 1.6rem; margin-bottom: 20px; }
+  .main-content p, .main-content li { font-size: 1rem; }
+  .footer { font-size: 12px; }
 }
