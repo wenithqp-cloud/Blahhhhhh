@@ -124,7 +124,6 @@ body.fade-out { opacity: 0; }
 /* ===============================
    MOBILE MENU BUTTON + DROPDOWN
    =============================== */
-
 /* Always hide mobile menu on PC */
 #mobileMenuBtn,
 #mobileDropdown {
