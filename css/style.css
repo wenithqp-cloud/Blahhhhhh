@@ -124,17 +124,14 @@ body.fade-out { opacity: 0; }
 /* ===============================
    MOBILE MENU BUTTON + DROPDOWN
    =============================== */
-/* Always hide mobile menu on PC */
 #mobileMenuBtn,
 #mobileDropdown {
-  display: none !important;
+  display: none !important; /* hidden on PC */
 }
 
 @media (max-width: 768px) {
-  /* Hide side menu on mobile */
   .side-menu { display: none; }
 
-  /* Show mobile menu on mobile only */
   #mobileMenuBtn {
     display: block !important;
     position: fixed;
@@ -151,7 +148,7 @@ body.fade-out { opacity: 0; }
   }
 
   #mobileDropdown {
-    display: none; /* hidden until button click */
+    display: none;
     position: fixed;
     top: 55px;
     right: 15px;
@@ -225,4 +222,33 @@ body.fade-out { opacity: 0; }
   .main-content h1 { font-size: 1.6rem; margin-bottom: 20px; }
   .main-content p, .main-content li { font-size: 1rem; }
   .footer { font-size: 12px; }
+}
+
+/* ===============================
+   SWIPE INDICATORS FOR MOBILE
+   =============================== */
+@media (max-width: 768px) {
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: rgba(255,255,255,0.7);
+    z-index: 1002;
+    pointer-events: none;
+  }
+
+  body::before {
+    content: '<';
+    left: 10px;
+    display: none; /* will show dynamically via JS */
+  }
+
+  body::after {
+    content: '>';
+    right: 10px;
+    display: none; /* will show dynamically via JS */
+  }
 }
