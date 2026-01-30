@@ -9,6 +9,7 @@ const STAR_COUNT = 200;
 const BIG_STAR_COUNT = 15;
 const MAX_STARS = 600;
 const MAX_CONNECTIONS = 2; // each star connects to 2 closest stars max
+const CONNECTION_UPDATE_INTERVAL = 2000; // 2 seconds
 
 let mouse = { x: null, y: null };
 
@@ -30,15 +31,22 @@ class Star {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
     this.radius = Math.random() * 1.5 + 0.5;
-    this.vx = (Math.random() - 0.5) * 0.3;
-    this.vy = (Math.random() - 0.5) * 0.3;
+
+    const speed = Math.random() * 0.3 + 0.2; // consistent speed
+    const angle = Math.random() * Math.PI * 2;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+
     this.isBig = false;
+    this.closestStars = [];
   }
 
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = this.isBig ? "rgba(255,255,200,0.9)" : "rgba(255,255,255,0.8)";
+    ctx.fillStyle = this.isBig
+      ? "rgba(255,255,200,0.9)"
+      : "rgba(255,255,255,0.8)";
     ctx.fill();
   }
 
@@ -46,10 +54,11 @@ class Star {
     this.x += this.vx;
     this.y += this.vy;
 
-    if (this.x < 0) this.x = canvas.width;
-    if (this.x > canvas.width) this.x = 0;
-    if (this.y < 0) this.y = canvas.height;
-    if (this.y > canvas.height) this.y = 0;
+    // Bounce off edges
+    if (this.x - this.radius < 0) { this.x = this.radius; this.vx = Math.abs(this.vx); }
+    if (this.x + this.radius > canvas.width) { this.x = canvas.width - this.radius; this.vx = -Math.abs(this.vx); }
+    if (this.y - this.radius < 0) { this.y = this.radius; this.vy = Math.abs(this.vy); }
+    if (this.y + this.radius > canvas.height) { this.y = canvas.height - this.radius; this.vy = -Math.abs(this.vy); }
 
     this.draw();
   }
@@ -60,11 +69,15 @@ class BigStar extends Star {
     super();
     this.radius = Math.random() * 3 + 2;
     this.isBig = true;
+
+    const speed = Math.random() * 0.5 + 0.2;
+    const angle = Math.random() * Math.PI * 2;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
   }
 
   explode() {
     let out = [];
-
     const PARTICLE_COUNT = 30;
     const NEW_STARS = 6;
 
@@ -85,8 +98,10 @@ class BigStar extends Star {
       const s = new Star();
       s.x = this.x;
       s.y = this.y;
-      s.vx = (Math.random() - 0.5) * 1.5;
-      s.vy = (Math.random() - 0.5) * 1.5;
+      const speed = Math.random() * 0.3 + 0.2;
+      const angle = Math.random() * Math.PI * 2;
+      s.vx = Math.cos(angle) * speed;
+      s.vy = Math.sin(angle) * speed;
       s.radius = Math.random() * 1.2 + 0.4;
       stars.push(s);
     }
@@ -122,7 +137,6 @@ function drawCursorLines() {
     ctx.moveTo(s.x, s.y);
     ctx.lineTo(mouse.x, mouse.y);
 
-    // Mobile-friendly opacity
     const opacity = window.innerWidth < 600 ? 0.05 : 0.1;
     ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
     ctx.lineWidth = 1;
@@ -131,49 +145,47 @@ function drawCursorLines() {
 }
 
 // ===============================
-// STAR → STAR CONNECTIONS (closest stars, max 2)
+// STAR CONNECTIONS (closest 2, updated every 2s)
 // ===============================
-function drawStarConnections() {
+let lastConnectionUpdate = 0;
+
+function drawStarConnections(timestamp) {
+  if (!lastConnectionUpdate || timestamp - lastConnectionUpdate > CONNECTION_UPDATE_INTERVAL) {
+    lastConnectionUpdate = timestamp;
+    // Calculate closest stars for each star
+    const allStars = stars.concat(bigStars);
+    allStars.forEach(s => {
+      const closest = allStars
+        .filter(o => o !== s)
+        .map(o => ({ star: o, dist: Math.hypot(o.x - s.x, o.y - s.y) }))
+        .sort((a, b) => a.dist - b.dist)
+        .slice(0, MAX_CONNECTIONS)
+        .map(p => p.star);
+      s.closestStars = closest;
+    });
+  }
+
+  // Draw lines
   const allStars = stars.concat(bigStars);
-  const connections = new Map();
-
-  allStars.forEach(s => connections.set(s, 0));
-
-  for (let s of allStars) {
-    if (connections.get(s) >= MAX_CONNECTIONS) continue;
-
-    // Find closest stars that still have < MAX_CONNECTIONS
-    const closest = allStars
-      .filter(o => o !== s && connections.get(o) < MAX_CONNECTIONS)
-      .map(o => ({ star: o, dist: Math.hypot(o.x - s.x, o.y - s.y) }))
-      .sort((a, b) => a.dist - b.dist)
-      .slice(0, MAX_CONNECTIONS);
-
-    for (let pair of closest) {
-      const other = pair.star;
-      if (connections.get(s) >= MAX_CONNECTIONS) break;
-
+  allStars.forEach(s => {
+    s.closestStars.forEach(other => {
       ctx.beginPath();
       ctx.moveTo(s.x, s.y);
       ctx.lineTo(other.x, other.y);
 
-      // Line opacity and width based on screen size
       const opacity = window.innerWidth < 600 ? 0.05 : 0.07;
       const width = window.innerWidth < 600 ? 0.5 : 1;
       ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
       ctx.lineWidth = width;
       ctx.stroke();
-
-      connections.set(s, connections.get(s) + 1);
-      connections.set(other, connections.get(other) + 1);
-    }
-  }
+    });
+  });
 }
 
 // ===============================
 // ANIMATION LOOP
 // ===============================
-function animate() {
+function animate(timestamp) {
   ctx.fillStyle = "rgba(11,15,26,0.6)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -181,7 +193,7 @@ function animate() {
   bigStars.forEach(b => b.update());
 
   drawCursorLines();
-  drawStarConnections();
+  drawStarConnections(timestamp);
 
   // Particles
   particles.forEach((p, i) => {
