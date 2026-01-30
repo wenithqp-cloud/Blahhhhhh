@@ -8,7 +8,7 @@ let particles = [];
 const STAR_COUNT = 200;
 const BIG_STAR_COUNT = 15;
 const MAX_STARS = 600;
-const MAX_CONNECTIONS = 2; // each star connects to 2 others max
+const MAX_CONNECTIONS = 2; // each star connects to 2 closest stars max
 
 let mouse = { x: null, y: null };
 
@@ -121,14 +121,17 @@ function drawCursorLines() {
     ctx.beginPath();
     ctx.moveTo(s.x, s.y);
     ctx.lineTo(mouse.x, mouse.y);
-    ctx.strokeStyle = "rgba(255,255,255,0.1)";
+
+    // Mobile-friendly opacity
+    const opacity = window.innerWidth < 600 ? 0.05 : 0.1;
+    ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
     ctx.lineWidth = 1;
     ctx.stroke();
   }
 }
 
 // ===============================
-// STAR → STAR CONNECTIONS (max 2 each)
+// STAR → STAR CONNECTIONS (closest stars, max 2)
 // ===============================
 function drawStarConnections() {
   const allStars = stars.concat(bigStars);
@@ -142,22 +145,27 @@ function drawStarConnections() {
     // Find closest stars that still have < MAX_CONNECTIONS
     const closest = allStars
       .filter(o => o !== s && connections.get(o) < MAX_CONNECTIONS)
-      .sort((a, b) => Math.hypot(a.x - s.x, a.y - s.y) - Math.hypot(b.x - s.x, b.y - s.y));
+      .map(o => ({ star: o, dist: Math.hypot(o.x - s.x, o.y - s.y) }))
+      .sort((a, b) => a.dist - b.dist)
+      .slice(0, MAX_CONNECTIONS);
 
-    let count = 0;
-    for (let other of closest) {
-      if (count >= MAX_CONNECTIONS) break;
+    for (let pair of closest) {
+      const other = pair.star;
+      if (connections.get(s) >= MAX_CONNECTIONS) break;
 
       ctx.beginPath();
       ctx.moveTo(s.x, s.y);
       ctx.lineTo(other.x, other.y);
-      ctx.strokeStyle = "rgba(255,255,255,0.07)";
-      ctx.lineWidth = 1;
+
+      // Line opacity and width based on screen size
+      const opacity = window.innerWidth < 600 ? 0.05 : 0.07;
+      const width = window.innerWidth < 600 ? 0.5 : 1;
+      ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
+      ctx.lineWidth = width;
       ctx.stroke();
 
       connections.set(s, connections.get(s) + 1);
       connections.set(other, connections.get(other) + 1);
-      count++;
     }
   }
 }
@@ -166,7 +174,6 @@ function drawStarConnections() {
 // ANIMATION LOOP
 // ===============================
 function animate() {
-  // Clear with semi-transparent bg for trails
   ctx.fillStyle = "rgba(11,15,26,0.6)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -202,7 +209,7 @@ function animate() {
     });
   });
 
-  // Star cap
+  // Cap stars for performance
   if (stars.length > MAX_STARS) {
     stars.splice(0, stars.length - MAX_STARS);
   }
