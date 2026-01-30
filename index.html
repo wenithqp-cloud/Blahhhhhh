@@ -58,9 +58,28 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
-    Adrian Zamora © 2026
-  </footer>
+<!-- Footer -->
+<footer class="footer" id="footerRickroll">
+  Adrian Zamora © 2026
+</footer>
+
+<!-- Hidden Rickroll Player -->
+<iframe id="rickrollPlayer" 
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0&loop=1&playlist=dQw4w9WgXcQ" 
+        style="display:none;" 
+        allow="autoplay">
+</iframe>
+
+<script>
+  const footer = document.getElementById('footerRickroll');
+  const player = document.getElementById('rickrollPlayer');
+
+  footer.addEventListener('click', () => {
+    // Play the hidden Rickroll
+    player.style.display = 'block';  // Optional: remove if you want it fully hidden
+  });
+</script>
+
 
   <!-- Hidden navigation (keyboard scrolling) -->
   <a href="about.html" class="next-page" hidden></a>
